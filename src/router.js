@@ -33,7 +33,8 @@ function router(hashValue) {
             // 이메일 유효성 검사
             signUpHTML.setEventListenerToEmail();
 
-
+            // 핸드폰 유효성 검사
+            signUpHTML.setEventListenerToPhone();
             break;
         }
         default: {

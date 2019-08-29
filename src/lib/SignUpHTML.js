@@ -59,7 +59,7 @@ SignUpHTML.prototype.getHtml = function () {
             <span id="form-email-result"></span>
             
             <label for="form-phone">휴대전화</label>
-            <input type="text" id="form-phone"/>
+            <input type="text" id="form-phone" placeholder="-없이 입력해주세요. 예)01012345678"/>
             <span id="form-phone-result"></span>
             
             <label for="form-interesting">관심사</label>
@@ -196,6 +196,22 @@ SignUpHTML.prototype.setEventListenerToEmail = function () {
             formEmailResult.textContent = '';
             formEmailResult.style.color = 'green';
         }
+    });
+};
+
+SignUpHTML.prototype.setEventListenerToPhone = function () {
+    document.getElementById('form-phone').addEventListener('blur', function (e) {
+        const formPhoneResult = document.querySelector('#form-phone-result');
+        const formPhone = document.querySelector('#form-phone');
+        const regexp = /^(010)+\d{3,4}\d{4}$/;
+
+        if (!regexp.test(formPhone.value)) {
+            formPhoneResult.textContent = '형식에 맞지 않는 번호입니다.';
+            formPhoneResult.style.color = 'red';
+            return;
+        }
+        formPhoneResult.textContent = '';
+        formPhoneResult.style.color = 'green';
     });
 };
 
