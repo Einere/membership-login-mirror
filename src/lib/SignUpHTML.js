@@ -80,10 +80,10 @@ SignUpHTML.prototype.getHtml = function () {
 
 SignUpHTML.prototype.setEventListenerToId = function () {
     document.getElementById('form-id').addEventListener('blur', function (e) {
-        const regex = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9\-_]{5,20}$/;
+        const regexp = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9\-_]{5,20}$/;
         const formIdResult = document.querySelector('#form-id-result');
 
-        if (regex.test(e.target.value)) {
+        if (regexp.test(e.target.value)) {
             formIdResult.textContent = '사용 가능한 아이디입니다.';
             formIdResult.style.color = "green";
         } else {
@@ -184,7 +184,19 @@ SignUpHTML.prototype.setEventListenerToDay = function (e) {
 };
 
 SignUpHTML.prototype.setEventListenerToEmail = function () {
+    document.getElementById('form-email').addEventListener('blur', function (e) {
+        const formEmailResult = document.querySelector('#form-email-result');
+        const formEmail = document.querySelector('#form-email');
+        const regexp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
 
+        if (!regexp.test(formEmail.value)) {
+            formEmailResult.textContent = '이메일 주소를 다시 확인해주세요.';
+            formEmailResult.style.color = 'red';
+        } else {
+            formEmailResult.textContent = '';
+            formEmailResult.style.color = 'green';
+        }
+    });
 };
 
 export {SignUpHTML};
