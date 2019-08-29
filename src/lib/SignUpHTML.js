@@ -25,7 +25,7 @@ SignUpHTML.prototype.getHtml = function () {
             <label for="form-name">이름</label>
             <input type="text" id="form-name">
             
-            <label>생년월일</label>
+            <label for="form-year">생년월일</label>
             <input type="text" id="form-year" maxlength="4" placeholder="년(4자)">
             <select id="form-month">
                 <option value="월" selected>월</option>
@@ -124,7 +124,6 @@ SignUpHTML.prototype.setEventListenerToPwCheck = function () {
     document.getElementById('form-pw-check').addEventListener('blur', function (e) {
         const formPwCheckResult = document.querySelector('#form-pw-check-result');
         const formPw = document.querySelector('#form-pw');
-        console.log(formPw.value, e.target.value);
         if (formPw.value !== e.target.value) {
             formPwCheckResult.textContent = '비밀번호가 일치하지 않습니다.';
             formPwCheckResult.style.color = "red";
@@ -132,6 +131,27 @@ SignUpHTML.prototype.setEventListenerToPwCheck = function () {
         }
         formPwCheckResult.textContent = '비밀번호가 일치합니다.';
         formPwCheckResult.style.color = "green";
+    });
+};
+
+SignUpHTML.prototype.setEventListenerToYear = function () {
+    document.getElementById('form-year').addEventListener('blur', function (e) {
+        const formBirthResult = document.querySelector('#form-birth-result');
+        const birthYear = parseInt(e.target.value, 10);
+        if (isNaN(birthYear)) {
+            formBirthResult.textContent = '태어난 년도 4자리를 정확하게 입력하세요.';
+            formBirthResult.style.color = 'red';
+            return;
+        }
+        const age = new Date().getFullYear() - birthYear;
+        if (age < 15 || age > 99) {
+            formBirthResult.textContent = '15세 이상, 99세 이하만 가입할 수 있습니다.';
+            formBirthResult.style.color = 'red';
+            return;
+        }
+        formBirthResult.textContent = '';
+        formBirthResult.style.color = 'green';
+
     });
 };
 

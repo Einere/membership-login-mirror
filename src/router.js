@@ -26,7 +26,8 @@ function router(hashValue) {
             // 비밀번호 재확인 유효성 검사
             signUpHTML.setEventListenerToPwCheck();
 
-
+            // 생년월일 유효성 검사
+            signUpHTML.setEventListenerToYear();
 
             break;
         }
