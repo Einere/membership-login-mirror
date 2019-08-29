@@ -19,6 +19,15 @@ function router(hashValue) {
 
             // id 유효성 검사
             signUpHTML.setEventListenerToId();
+
+            // 비밀번호 유효성 검사
+            signUpHTML.setEventListenerToPw();
+
+            // 비밀번호 재확인 유효성 검사
+            signUpHTML.setEventListenerToPwCheck();
+
+
+
             break;
         }
         default: {

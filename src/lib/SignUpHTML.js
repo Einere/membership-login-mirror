@@ -26,7 +26,7 @@ SignUpHTML.prototype.getHtml = function () {
             <input type="text" id="form-name">
             
             <label>생년월일</label>
-            <input type="text" id="form-year" placeholder="년(4자)">
+            <input type="text" id="form-year" maxlength="4" placeholder="년(4자)">
             <select id="form-month">
                 <option value="월" selected>월</option>
                 <option value="1">1</option>
@@ -91,5 +91,48 @@ SignUpHTML.prototype.setEventListenerToId = function () {
     });
 };
 
+
+SignUpHTML.prototype.setEventListenerToPw = function () {
+    document.getElementById('form-pw').addEventListener('blur', function (e) {
+        const formPwResult = document.querySelector('#form-pw-result');
+        if (!/^.{8,16}$/.test(e.target.value)) {
+            formPwResult.textContent = '8자 이상 16자 이하로 입력해주세요.';
+            formPwResult.style.color = "red";
+            return;
+        }
+        if (!/[A-Z]+/.test(e.target.value)) {
+            formPwResult.textContent = '영문 대문자를 최소 1자 이상 포함해주세요.';
+            formPwResult.style.color = "red";
+            return;
+        }
+        if (!/[0-9]+/.test(e.target.value)) {
+            formPwResult.textContent = '숫자를 최소 1자 이상 포함해주세요.';
+            formPwResult.style.color = "red";
+            return;
+        }
+        if (!/[!@#$%^&*]+/.test(e.target.value)) {
+            formPwResult.textContent = '특수문자를 최소 1자 이상 포함해주세요.';
+            formPwResult.style.color = "red";
+            return;
+        }
+        formPwResult.textContent = '안전한 비밀번호입니다.';
+        formPwResult.style.color = "green";
+    });
+};
+
+SignUpHTML.prototype.setEventListenerToPwCheck = function () {
+    document.getElementById('form-pw-check').addEventListener('blur', function (e) {
+        const formPwCheckResult = document.querySelector('#form-pw-check-result');
+        const formPw = document.querySelector('#form-pw');
+        console.log(formPw.value, e.target.value);
+        if (formPw.value !== e.target.value) {
+            formPwCheckResult.textContent = '비밀번호가 일치하지 않습니다.';
+            formPwCheckResult.style.color = "red";
+            return;
+        }
+        formPwCheckResult.textContent = '비밀번호가 일치합니다.';
+        formPwCheckResult.style.color = "green";
+    });
+};
 
 export {SignUpHTML};
