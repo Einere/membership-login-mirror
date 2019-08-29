@@ -1,6 +1,10 @@
 /* custom css */
-label {
-    display: block;
+body {
+    background-color: whitesmoke;
+}
+
+h1 {
+    font-size: 2rem;
 }
 
 span {
@@ -16,6 +20,14 @@ span {
 
 .form-container .form-title {
     text-align: center;
+    color: forestgreen;
+    font-size: 1.5rem;
+}
+
+.form-container label {
+    display: block;
+    font-weight: bold;
+    font-size: 1.2rem;
 }
 
 .form-container input,

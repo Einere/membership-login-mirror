@@ -24,6 +24,7 @@ SignUpHTML.prototype.getHtml = function () {
             
             <label for="form-name">이름</label>
             <input type="text" id="form-name">
+            <span id="form-name-result"></span>
             
             <label for="form-year">생년월일</label>
             <input type="text" id="form-year" maxlength="4" placeholder="년(4자)">
@@ -47,7 +48,7 @@ SignUpHTML.prototype.getHtml = function () {
             
             <label for="form-gender">성별</label>
             <select id="form-gender">
-                <option value="성별">성별</option>
+                <option value="성별" selected>성별</option>
                 <option value="0">남</option>
                 <option value="1">녀</option>
             </select>
@@ -180,6 +181,10 @@ SignUpHTML.prototype.setEventListenerToDay = function (e) {
         formBirthResult.textContent = '';
         formBirthResult.style.color = 'green';
     }.bind(this));
+};
+
+SignUpHTML.prototype.setEventListenerToEmail = function () {
+
 };
 
 export {SignUpHTML};
