@@ -28,7 +28,7 @@ function router(hashValue) {
 
             // 생년월일 유효성 검사
             signUpHTML.setEventListenerToYear();
-
+            signUpHTML.setEventListenerToDay();
             break;
         }
         default: {

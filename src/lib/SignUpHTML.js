@@ -1,5 +1,5 @@
 function SignUpHTML() {
-
+    this.days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 }
 
 SignUpHTML.prototype.getHtml = function () {
@@ -29,20 +29,20 @@ SignUpHTML.prototype.getHtml = function () {
             <input type="text" id="form-year" maxlength="4" placeholder="년(4자)">
             <select id="form-month">
                 <option value="월" selected>월</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
+                <option value="0">1</option>
+                <option value="1">2</option>
+                <option value="2">3</option>
+                <option value="3">4</option>
+                <option value="4">5</option>
+                <option value="5">6</option>
+                <option value="6">7</option>
+                <option value="7">8</option>
+                <option value="8">9</option>
+                <option value="9">10</option>
+                <option value="10">11</option>
+                <option value="11">12</option>
             </select>
-            <input type="text" id="form-day" placeholder="일">
+            <input type="text" id="form-day" maxlength="2" placeholder="일">
             <span id="form-birth-result"></span>
             
             <label for="form-gender">성별</label>
@@ -81,6 +81,7 @@ SignUpHTML.prototype.setEventListenerToId = function () {
     document.getElementById('form-id').addEventListener('blur', function (e) {
         const regex = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9\-_]{5,20}$/;
         const formIdResult = document.querySelector('#form-id-result');
+
         if (regex.test(e.target.value)) {
             formIdResult.textContent = '사용 가능한 아이디입니다.';
             formIdResult.style.color = "green";
@@ -95,6 +96,7 @@ SignUpHTML.prototype.setEventListenerToId = function () {
 SignUpHTML.prototype.setEventListenerToPw = function () {
     document.getElementById('form-pw').addEventListener('blur', function (e) {
         const formPwResult = document.querySelector('#form-pw-result');
+
         if (!/^.{8,16}$/.test(e.target.value)) {
             formPwResult.textContent = '8자 이상 16자 이하로 입력해주세요.';
             formPwResult.style.color = "red";
@@ -124,6 +126,7 @@ SignUpHTML.prototype.setEventListenerToPwCheck = function () {
     document.getElementById('form-pw-check').addEventListener('blur', function (e) {
         const formPwCheckResult = document.querySelector('#form-pw-check-result');
         const formPw = document.querySelector('#form-pw');
+
         if (formPw.value !== e.target.value) {
             formPwCheckResult.textContent = '비밀번호가 일치하지 않습니다.';
             formPwCheckResult.style.color = "red";
@@ -138,6 +141,7 @@ SignUpHTML.prototype.setEventListenerToYear = function () {
     document.getElementById('form-year').addEventListener('blur', function (e) {
         const formBirthResult = document.querySelector('#form-birth-result');
         const birthYear = parseInt(e.target.value, 10);
+
         if (isNaN(birthYear)) {
             formBirthResult.textContent = '태어난 년도 4자리를 정확하게 입력하세요.';
             formBirthResult.style.color = 'red';
@@ -153,6 +157,22 @@ SignUpHTML.prototype.setEventListenerToYear = function () {
         formBirthResult.style.color = 'green';
 
     });
+};
+
+SignUpHTML.prototype.setEventListenerToDay = function (e) {
+    document.getElementById('form-day').addEventListener('blur', function (e) {
+        const formBirthResult = document.querySelector('#form-birth-result');
+        const formBirthMonth = document.querySelector('#form-month');
+        const birthDay = parseInt(e.target.value);
+
+        if (birthDay < 1 || birthDay > this.days[formBirthMonth.value]) {
+            formBirthResult.textContent = '태어난 날짜를 다시 확인해주세요.';
+            formBirthResult.style.color = 'red';
+            return;
+        }
+        formBirthResult.textContent = '';
+        formBirthResult.style.color = 'green';
+    }.bind(this));
 };
 
 export {SignUpHTML};
