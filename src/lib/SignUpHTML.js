@@ -164,8 +164,15 @@ SignUpHTML.prototype.setEventListenerToDay = function (e) {
         const formBirthResult = document.querySelector('#form-birth-result');
         const formBirthMonth = document.querySelector('#form-month');
         const birthDay = parseInt(e.target.value);
+        let birthMonth = parseInt(formBirthMonth.value, 10);
 
-        if (birthDay < 1 || birthDay > this.days[formBirthMonth.value]) {
+        if (isNaN(birthMonth)) {
+            formBirthResult.textContent = '태어난 월을 선택해주세요.';
+            formBirthResult.style.color = 'red';
+            return;
+        }
+
+        if (birthDay < 1 || birthDay > this.days[birthMonth]) {
             formBirthResult.textContent = '태어난 날짜를 다시 확인해주세요.';
             formBirthResult.style.color = 'red';
             return;
