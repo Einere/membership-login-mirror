@@ -1,9 +1,10 @@
 import {getHomeHTML} from "./lib/getHomeHTML.js";
-import {getSignUpHTML} from './lib/getSignUpHTML.js';
+import {SignUpHTML} from './lib/SignUpHTML.js';
 
 function setContent(htmlStr) {
-    const lead = document.querySelector('.lead');
-    lead.innerHTML = htmlStr;
+    const container = document.querySelector('.container');
+    container.innerHTML = htmlStr;
+    return container;
 }
 
 function router(hashValue) {
@@ -13,7 +14,11 @@ function router(hashValue) {
             break;
         }
         case 'signup': {
-            setContent(getSignUpHTML());
+            const signUpHTML = new SignUpHTML();
+            setContent(signUpHTML.getHtml());
+
+            // id 유효성 검사
+            signUpHTML.setEventListenerToId();
             break;
         }
         default: {
@@ -24,7 +29,6 @@ function router(hashValue) {
 
 window.addEventListener('hashchange', function () {
     const hashValue = location.hash.replace('#', '');
-    if (hashValue === '') console.log('empty string');
-    console.log(hashValue);
     router(hashValue);
+
 });

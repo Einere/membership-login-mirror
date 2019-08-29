@@ -1,3 +1,40 @@
 label {
     display: block;
 }
+
+.form-container {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.form-container .form-title {
+    text-align: center;
+}
+
+.form-container input {
+    width: 100%;
+}
+
+.form-container input:focus {
+    border-color: cadetblue;
+}
+
+.form-container #form-agree {
+    width: auto;
+}
+
+.form-container #form-year,
+.form-container #form-month,
+.form-container #form-day {
+    width: 30%;
+    margin: 0 auto;
+}
+
+.form-container .form-button {
+    width: 40%;
+    margin: 0 auto;
+}
+
+
+
+

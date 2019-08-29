@@ -11,16 +11,21 @@ description : 회원가입 및 로그인 개발(front-end)
     - fragment(`location.hash`)와`window`, `hashchange`를 이용하여 네이티브하게 라우팅할 수 있다. 
 
 #### 8.29(목)
-1. css 작성
+1. flex box, CSS variable 공부하기
+2. 각 form요소에 material design 적용하기
+3. 중앙 정렬하기
+4. 중복되는 요소는 builder를 이용해 동적으로 관리(값과 이벤트 핸들러를 설정 가능)
 
-#### 8.30(토)
+#### 8.30(금)
 1. 유효성 검사 로직 구현
 
-#### 8.31(일)
+#### 8.31(토)
 
-#### 9.01(월)
+#### 9.01(일)
 
-#### 9.02(화)
+#### 9.02(월)
+
+#### 9.03(화)
 
 ## 개발환경
 1. jQuery, React, Vue, lodash, bootstrap, materialUI 등의 라이브러리는 사용할 수 없다.
