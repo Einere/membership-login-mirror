@@ -26,6 +26,9 @@ function router(hashValue) {
             // 비밀번호 재확인 유효성 검사
             signUpHTML.setEventListenerToPwCheck();
 
+            // 이름 유효성 검사
+            signUpHTML.setEventListenerToName();
+
             // 생년월일 유효성 검사
             signUpHTML.setEventListenerToYear();
             signUpHTML.setEventListenerToDay();
@@ -41,6 +44,9 @@ function router(hashValue) {
 
             // 모달 세팅
             signUpHTML.setEventListenerToAgree();
+
+            // 제출 세팅
+            signUpHTML.setEventListenerToSubmit();
             break;
         }
         default: {

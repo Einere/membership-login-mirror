@@ -14,6 +14,21 @@ function SignUpHTML() {
         interesting: false,
         agree: false
     };
+    readTextFile('./src/data/error.json', function (text) {
+        this.error = JSON.parse(text);
+    }.bind(this));
+}
+
+function readTextFile(file, callback) {
+    const rawFile = new XMLHttpRequest();
+    rawFile.overrideMimeType("application/json");
+    rawFile.open("GET", file, true);
+    rawFile.onreadystatechange = function () {
+        if (rawFile.readyState === 4 && rawFile.status === 200) {
+            callback(rawFile.responseText);
+        }
+    };
+    rawFile.send(null);
 }
 
 SignUpHTML.prototype.getHtml = function () {
@@ -138,7 +153,18 @@ SignUpHTML.prototype.getHtml = function () {
         </textarea>
         <button class="popup-modal-button" id="popup-modal-agree-accept" disabled>동의</button> 
     </div>
+    
+    <!-- snackbar -->
+    <div id="snackbar"></div>
     `;
+};
+
+SignUpHTML.prototype.setResult = function (target, key, index) {
+    const error = this.error[key][index];
+
+    target.textContent = error.message;
+    target.style.color = error.success ? "green" : "red";
+    this.validation[key] = error.success;
 };
 
 SignUpHTML.prototype.setEventListenerToId = function () {
@@ -147,13 +173,9 @@ SignUpHTML.prototype.setEventListenerToId = function () {
         const formIdResult = document.querySelector('#form-id-result');
 
         if (regexp.test(e.target.value)) {
-            formIdResult.textContent = '사용 가능한 아이디입니다.';
-            formIdResult.style.color = "green";
-            this.validation.id = true;
+            this.setResult(formIdResult, 'id', 0);
         } else {
-            formIdResult.textContent = '5~20자의 영문 소문자, 숫자와 특수기호(_)(-) 만 사용 가능합니다.';
-            formIdResult.style.color = "red";
-            this.validation.id = false;
+            this.setResult(formIdResult, 'id', 1);
         }
     }.bind(this));
 };
@@ -164,32 +186,22 @@ SignUpHTML.prototype.setEventListenerToPw = function () {
         const formPwResult = document.querySelector('#form-pw-result');
 
         if (!/^.{8,16}$/.test(e.target.value)) {
-            formPwResult.textContent = '8자 이상 16자 이하로 입력해주세요.';
-            formPwResult.style.color = "red";
-            this.validation.pw = false;
+            this.setResult(formPwResult, 'pw', 1);
             return;
         }
         if (!/[A-Z]+/.test(e.target.value)) {
-            formPwResult.textContent = '영문 대문자를 최소 1자 이상 포함해주세요.';
-            formPwResult.style.color = "red";
-            this.validation.pw = false;
+            this.setResult(formPwResult, 'pw', 2);
             return;
         }
         if (!/[0-9]+/.test(e.target.value)) {
-            formPwResult.textContent = '숫자를 최소 1자 이상 포함해주세요.';
-            formPwResult.style.color = "red";
-            this.validation.pw = false;
+            this.setResult(formPwResult, 'pw', 3);
             return;
         }
         if (!/[!@#$%^&*]+/.test(e.target.value)) {
-            formPwResult.textContent = '특수문자를 최소 1자 이상 포함해주세요.';
-            formPwResult.style.color = "red";
-            this.validation.pw = false;
+            this.setResult(formPwResult, 'pw', 4);
             return;
         }
-        formPwResult.textContent = '안전한 비밀번호입니다.';
-        formPwResult.style.color = "green";
-        this.validation.pw = true;
+        this.setResult(formPwResult, 'pw', 0);
     }.bind(this));
 };
 
@@ -199,16 +211,25 @@ SignUpHTML.prototype.setEventListenerToPwCheck = function () {
         const formPw = document.querySelector('#form-pw');
 
         if (formPw.value !== e.target.value) {
-            formPwCheckResult.textContent = '비밀번호가 일치하지 않습니다.';
-            formPwCheckResult.style.color = "red";
-            this.validation.pwCheck = false;
-            return;
+            this.setResult(formPwCheckResult, 'pwCheck', 1);
+        } else {
+            this.setResult(formPwCheckResult, 'pwCheck', 0);
         }
-        formPwCheckResult.textContent = '비밀번호가 일치합니다.';
-        formPwCheckResult.style.color = "green";
-        this.validation.pwCheck = true;
+
     }.bind(this));
 };
+
+SignUpHTML.prototype.setEventListenerToName = function () {
+    document.getElementById('form-name').addEventListener('blur', function (e) {
+        const formNameResult = document.querySelector('#form-name-result');
+
+        if (!e.target.value) {
+            this.setResult(formNameResult, 'name', 1);
+        } else {
+            this.setResult(formNameResult, 'name', 0);
+        }
+    }.bind(this));
+}
 
 SignUpHTML.prototype.setEventListenerToYear = function () {
     document.getElementById('form-year').addEventListener('blur', function (e) {
@@ -216,21 +237,16 @@ SignUpHTML.prototype.setEventListenerToYear = function () {
         const birthYear = parseInt(e.target.value, 10);
 
         if (isNaN(birthYear)) {
-            formBirthResult.textContent = '태어난 년도 4자리를 정확하게 입력하세요.';
-            formBirthResult.style.color = 'red';
-            this.validation.year = false;
+            this.setResult(formBirthResult, 'year', 1);
             return;
         }
+
         const age = new Date().getFullYear() - birthYear;
         if (age < 15 || age > 99) {
-            formBirthResult.textContent = '15세 이상, 99세 이하만 가입할 수 있습니다.';
-            formBirthResult.style.color = 'red';
-            this.validation.year = false;
+            this.setResult(formBirthResult, 'year', 2);
             return;
         }
-        formBirthResult.textContent = '';
-        formBirthResult.style.color = 'green';
-        this.validation.year = true;
+        this.setResult(formBirthResult, 'year', 0);
     }.bind(this));
 };
 
@@ -246,9 +262,7 @@ SignUpHTML.prototype.setEventListenerToDay = function (e) {
         let birthMonth = parseInt(formBirthMonth.value, 10);
 
         if (isNaN(birthMonth)) {
-            formBirthResult.textContent = '태어난 월을 선택해주세요.';
-            formBirthResult.style.color = 'red';
-            this.validation.month = false;
+            this.setResult(formBirthResult, 'month', 1);
             return;
         }
 
@@ -258,16 +272,11 @@ SignUpHTML.prototype.setEventListenerToDay = function (e) {
         console.log(this.days[1]);
 
         if (birthDay < 1 || birthDay > this.days[birthMonth]) {
-            formBirthResult.textContent = '태어난 날짜를 다시 확인해주세요.';
-            formBirthResult.style.color = 'red';
-            this.validation.day = false;
+            this.setResult(formBirthResult, 'day', 1);
             return;
         }
-
-        formBirthResult.textContent = '';
-        formBirthResult.style.color = 'green';
-        this.validation.month = true;
-        this.validation.day = true;
+        this.setResult(formBirthResult, 'month', 0);
+        this.setResult(formBirthResult, 'day', 0);
     }.bind(this));
 };
 
@@ -276,14 +285,10 @@ SignUpHTML.prototype.setEventListenerToGender = function () {
     document.getElementById('form-gender').addEventListener('blur', function (e) {
         const formGenderResult = document.querySelector('#form-gender-result');
         if (isNaN(parseInt(e.target.value, 10))) {
-            formGenderResult.textContent = '성별을 선택해주세요.';
-            formGenderResult.style.color = 'red';
-            this.validation.gender = false;
-            return;
+            this.setResult(formGenderResult, 'gender', 1);
+        } else {
+            this.setResult(formGenderResult, 'gender', 0);
         }
-        formGenderResult.textContent = '';
-        formGenderResult.style.color = 'green';
-        this.validation.gender = true;
     }.bind(this));
 };
 
@@ -294,13 +299,9 @@ SignUpHTML.prototype.setEventListenerToEmail = function () {
         const regexp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
 
         if (!regexp.test(formEmail.value)) {
-            formEmailResult.textContent = '이메일 주소를 다시 확인해주세요.';
-            formEmailResult.style.color = 'red';
-            this.validation.email = false;
+            this.setResult(formEmailResult, 'email', 1);
         } else {
-            formEmailResult.textContent = '';
-            formEmailResult.style.color = 'green';
-            this.validation.email = true;
+            this.setResult(formEmailResult, 'email', 0);
         }
     }.bind(this));
 };
@@ -312,14 +313,10 @@ SignUpHTML.prototype.setEventListenerToPhone = function () {
         const regexp = /^(010)+\d{3,4}\d{4}$/;
 
         if (!regexp.test(formPhone.value)) {
-            formPhoneResult.textContent = '형식에 맞지 않는 번호입니다.';
-            formPhoneResult.style.color = 'red';
-            this.validation.phone = false;
-            return;
+            this.setResult(formPhoneResult, 'phone', 1);
+        } else {
+            this.setResult(formPhoneResult, 'phone', 0);
         }
-        formPhoneResult.textContent = '';
-        formPhoneResult.style.color = 'green';
-        this.validation.phone = true;
     }.bind(this));
 };
 
@@ -369,6 +366,7 @@ SignUpHTML.prototype.setEventListenerToAgree = function () {
         }
     });
 
+    // 약관 동의 체크
     modalAccept.addEventListener('click', function (e) {
         const formAgree = document.querySelector('#form-agree');
         formAgree.checked = true;
@@ -376,8 +374,26 @@ SignUpHTML.prototype.setEventListenerToAgree = function () {
     }.bind(this));
 };
 
-SignUpHTML.prototype.setEventListenerToReset = function () {
-    document.querySelector('')
+SignUpHTML.prototype.setEventListenerToSubmit = function () {
+    document.querySelector('#form-submit').addEventListener('click', function (e) {
+        e.preventDefault();
+
+        let message = '';
+        const result = Object.keys(this.validation).reduce(function (acc, key, index) {
+            if (!this.validation[key]) {
+                message = message.concat(this.error.submit[key], "\n");
+            }
+            return acc && this.validation[key];
+        }.bind(this), true);
+
+        if (!result) {
+            alert(message);
+        }
+    }.bind(this));
 };
+
+SignUpHTML.prototype.showSnackBar = function () {
+
+}
 
 export {SignUpHTML};
