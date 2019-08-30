@@ -46,9 +46,9 @@ span {
     border-color: forestgreen;
 }
 
-.form-container #form-agree {
+/*.form-container  {
     width: auto;
-}
+}*/
 
 .form-container #form-year,
 .form-container #form-month,
@@ -58,26 +58,48 @@ span {
     margin: 0 auto;
 }
 
-.form-container .form-button {
+.form-container .button-bar {
+    text-align: center;
+}
+
+.popup-modal-button,
+.form-container .button-bar .form-button {
     height: 2rem;
     width: 40%;
     margin: 0 auto;
     color: white;
     background-color: forestgreen;
     border-style: none;
+    font-weight: bold;
+    font-size: 1.1rem;
 }
 
-.form-container u.form-agree {
+.form-container label.form-agree-bar {
+    height: 100%;
+    line-height: 100%;
+}
 
+.form-container label.form-agree-bar .form-agree {
+    vertical-align: text-bottom;
+    width: auto;
+}
+
+.form-container label.form-agree-bar #form-agree.form-agree {
+    vertical-align: middle;
 }
 
 .form-container u.form-agree:hover {
+    color: forestgreen;
     cursor: pointer;
 }
 
 .form-container .form-button:hover {
     background-color: darkgreen;
     cursor: pointer;
+}
+
+.button-bar {
+
 }
 
 
@@ -114,11 +136,13 @@ span {
     pointer-events: none;
     transition: all 300ms ease-in-out;
     z-index: 1011;
+    text-align: center;
 }
 
 .popup-modal.is--visible {
     opacity: 1;
     pointer-events: auto;
+    content: " (" attr(open) ")";
 }
 
 .popup-modal__close {
@@ -148,3 +172,11 @@ span {
     width: 100%;
 }
 
+.popup-modal-button {
+    cursor: pointer;
+}
+
+.popup-modal-button:disabled {
+    background-color: darkred;
+    cursor: not-allowed;
+}

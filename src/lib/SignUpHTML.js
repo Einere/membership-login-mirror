@@ -83,14 +83,14 @@ SignUpHTML.prototype.getHtml = function () {
             <input type="text" id="form-interesting"/>
             <span id="form-interesting-result"></span>
             
-            <label for="form-agree">
+            <label for="form-agree" class="form-agree-bar">
                 <u class="form-agree btn btn-sm btn-primary shadow p-2 px-3 popup-trigger" data-popup-trigger="one">약관에 동의합니다.</u>
-                <input type="checkbox" id="form-agree" disabled>
+                <input type="checkbox" id="form-agree" class="form-agree" disabled>
             </label>
-            <label>
-                <input type="reset" class="form-button" id="form-reset">초기화</input>
+            <div class="button-bar">
+                <input type="reset" class="form-button" id="form-reset"/>
                 <input type="submit" class="form-button" id="form-submit" value="회원가입">
-            </label>
+            </div>
         </form>
     </div>
     
