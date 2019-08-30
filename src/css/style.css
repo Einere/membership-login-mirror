@@ -141,6 +141,10 @@ span {
 }
 
 .popup-modal .popup-modal-agree {
+    resize: none;
+}
+
+.popup-modal .popup-modal-agree {
     width: 100%;
 }
 

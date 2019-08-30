@@ -87,7 +87,7 @@ SignUpHTML.prototype.getHtml = function () {
                 <input type="checkbox" id="form-agree" disabled>
             </label>
             <label>
-                <button class="form-button" id="form-reset">초기화</button>
+                <input type="reset" class="form-button" id="form-reset">초기화</input>
                 <input type="submit" class="form-button" id="form-submit" value="회원가입">
             </label>
         </div>
@@ -135,7 +135,7 @@ SignUpHTML.prototype.getHtml = function () {
             보존 이유 : 통신비밀보호법
             보존 기간 : 3개월
         </textarea>
-        <button class="popup-modal-button" id="form-agree-accept" disabled>확인</button> 
+        <button class="popup-modal-button" id="form-agree-accept" disabled>동의</button> 
     </div>
     `;
 };
@@ -331,6 +331,7 @@ SignUpHTML.prototype.setEventListenerToAgree = function () {
     const modalCloseTrigger = document.querySelector('.popup-modal__close');
     const bodyBlackout = document.querySelector('.body-blackout');
 
+    // 기본적인 모달 기능
     modalTriggers.forEach(trigger => {
         trigger.addEventListener('click', () => {
             const {popupTrigger} = trigger.dataset;
@@ -345,6 +346,27 @@ SignUpHTML.prototype.setEventListenerToAgree = function () {
             });
         });
     });
+
+    // 동의 버튼 활성화
+    const modalAccept = document.querySelector('#form-agree-accept');
+    const modalAgree = document.querySelector('.popup-modal-agree');
+    // 스로틀링을 위한 변수
+    let ticking = false;
+    modalAgree.addEventListener('scroll', function (e) {
+        if (!ticking) {
+            // reqeustAnimationFrame을 이용한 스로틀링
+            window.requestAnimationFrame(function () {
+                if (e.target.scrollHeight <= e.target.scrollTop + e.target.offsetHeight) {
+                    modalAccept.removeAttribute('disabled');
+                    ticking = true;
+                }
+            });
+        }
+
+    });
+};
+
+SignUpHTML.prototype.setEventListenerToReset = function () {
 
 };
 

@@ -25,7 +25,10 @@ description : 회원가입 및 로그인 개발(front-end)
 
 
 #### 8.31(토)
-
+1. section / article 공부하기
+2. flex 속성 공부하기
+3. css variable 공부하기
+4. magic number 공부하기
 
 #### 9.01(일)
 
