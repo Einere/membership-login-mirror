@@ -229,7 +229,7 @@ SignUpHTML.prototype.setEventListenerToName = function () {
             this.setResult(formNameResult, 'name', 0);
         }
     }.bind(this));
-}
+};
 
 SignUpHTML.prototype.setEventListenerToYear = function () {
     document.getElementById('form-year').addEventListener('blur', function (e) {
@@ -381,19 +381,31 @@ SignUpHTML.prototype.setEventListenerToSubmit = function () {
         let message = '';
         const result = Object.keys(this.validation).reduce(function (acc, key, index) {
             if (!this.validation[key]) {
-                message = message.concat(this.error.submit[key], "\n");
+                message = message.concat(`${this.error.submit[key]} `);
             }
             return acc && this.validation[key];
         }.bind(this), true);
 
         if (!result) {
-            alert(message);
+            this.showSnackBar(message);
         }
     }.bind(this));
 };
 
-SignUpHTML.prototype.showSnackBar = function () {
+SignUpHTML.prototype.showSnackBar = function (message) {
+    // Get the snackbar DIV
+    const toast = document.getElementById("snackbar");
 
-}
+    // set message
+    toast.textContent = message;
+
+    // Add the "show" class to DIV
+    toast.classList.add("show");
+
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function () {
+        toast.classList.remove("show")
+    }, 3000);
+};
 
 export {SignUpHTML};
