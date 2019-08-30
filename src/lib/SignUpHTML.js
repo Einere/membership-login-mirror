@@ -11,7 +11,8 @@ function SignUpHTML() {
         gender: false,
         email: false,
         phone: false,
-        interesting: false
+        interesting: false,
+        agree: false
     };
 }
 
@@ -25,7 +26,7 @@ SignUpHTML.prototype.getHtml = function () {
             <h1>회원가입</h1>
         </div>
         
-        <div>
+        <form>
             <label for="form-id">아이디</label>
             <input type="text" id="form-id">
             <span id="form-id-result"></span>
@@ -90,7 +91,7 @@ SignUpHTML.prototype.getHtml = function () {
                 <input type="reset" class="form-button" id="form-reset">초기화</input>
                 <input type="submit" class="form-button" id="form-submit" value="회원가입">
             </label>
-        </div>
+        </form>
     </div>
     
     <!-- Modals -->
@@ -135,7 +136,7 @@ SignUpHTML.prototype.getHtml = function () {
             보존 이유 : 통신비밀보호법
             보존 기간 : 3개월
         </textarea>
-        <button class="popup-modal-button" id="form-agree-accept" disabled>동의</button> 
+        <button class="popup-modal-button" id="popup-modal-agree-accept" disabled>동의</button> 
     </div>
     `;
 };
@@ -330,6 +331,8 @@ SignUpHTML.prototype.setEventListenerToAgree = function () {
     const modalTriggers = document.querySelectorAll('.popup-trigger');
     const modalCloseTrigger = document.querySelector('.popup-modal__close');
     const bodyBlackout = document.querySelector('.body-blackout');
+    const modalAccept = document.querySelector('#popup-modal-agree-accept');
+    const modalAgree = document.querySelector('.popup-modal-agree');
 
     // 기본적인 모달 기능
     modalTriggers.forEach(trigger => {
@@ -344,12 +347,14 @@ SignUpHTML.prototype.setEventListenerToAgree = function () {
                 popupModal.classList.remove('is--visible');
                 bodyBlackout.classList.remove('is-blacked-out');
             });
+            modalAccept.addEventListener('click', () => {
+                popupModal.classList.remove('is--visible');
+                bodyBlackout.classList.remove('is-blacked-out');
+            });
         });
     });
 
     // 동의 버튼 활성화
-    const modalAccept = document.querySelector('#form-agree-accept');
-    const modalAgree = document.querySelector('.popup-modal-agree');
     // 스로틀링을 위한 변수
     let ticking = false;
     modalAgree.addEventListener('scroll', function (e) {
@@ -362,12 +367,17 @@ SignUpHTML.prototype.setEventListenerToAgree = function () {
                 }
             });
         }
-
     });
+
+    modalAccept.addEventListener('click', function (e) {
+        const formAgree = document.querySelector('#form-agree');
+        formAgree.checked = true;
+        this.validation.agree = true;
+    }.bind(this));
 };
 
 SignUpHTML.prototype.setEventListenerToReset = function () {
-
+    document.querySelector('')
 };
 
 export {SignUpHTML};
