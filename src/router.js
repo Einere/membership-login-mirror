@@ -38,6 +38,9 @@ function router(hashValue) {
 
             // 핸드폰 유효성 검사
             signUpHTML.setEventListenerToPhone();
+
+            // 모달 세팅
+            signUpHTML.setEventListenerToAgree();
             break;
         }
         default: {
