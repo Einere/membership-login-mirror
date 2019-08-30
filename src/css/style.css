@@ -3,8 +3,9 @@ body {
     background-color: whitesmoke;
 }
 
-h1 {
-    font-size: 2rem;
+nav.header h1 {
+    font-size: 3rem;
+    text-align: center;
 }
 
 span {
@@ -14,7 +15,7 @@ span {
 }
 
 .form-container {
-    width: 50%;
+    width: 30%;
     margin: 0 auto;
 }
 
@@ -31,13 +32,16 @@ span {
 }
 
 .form-container input,
+.form-container button,
 .form-container select {
     height: 2rem;
     width: 100%;
 }
 
-.form-container input:focus {
-    border-color: cadetblue;
+.form-container input:focus,
+.form-container select:focus {
+    border-style: solid;
+    border-color: forestgreen;
 }
 
 .form-container #form-agree {
@@ -53,8 +57,25 @@ span {
 }
 
 .form-container .form-button {
+    height: 2rem;
     width: 40%;
     margin: 0 auto;
+    color: white;
+    background-color: forestgreen;
+    border-style: none;
+}
+
+.form-container u.form-agree {
+
+}
+
+.form-container u.form-agree:hover {
+    cursor: pointer;
+}
+
+.form-container .form-button:hover {
+    background-color: darkgreen;
+    cursor: pointer;
 }
 
 

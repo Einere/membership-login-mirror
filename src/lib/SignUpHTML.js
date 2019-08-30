@@ -67,10 +67,10 @@ SignUpHTML.prototype.getHtml = function () {
             <span id="form-interesting-result"></span>
             
             <label for="form-agree">
-                <p><u>약관에 동의합니다.</u><input type="checkbox" id="form-agree" disabled></p>
+                <u class="form-agree">약관에 동의합니다.</u><input type="checkbox" id="form-agree" disabled>
             </label>
             <label>
-                <button class="form-button">초기화</button>
+                <button class="form-button" id="form-reset">초기화</button>
                 <input type="submit" class="form-button" id="form-submit" value="회원가입">
             </label>
         </div>
@@ -181,6 +181,20 @@ SignUpHTML.prototype.setEventListenerToDay = function (e) {
         formBirthResult.textContent = '';
         formBirthResult.style.color = 'green';
     }.bind(this));
+};
+
+
+SignUpHTML.prototype.setEventListenerToGender = function () {
+    document.getElementById('form-gender').addEventListener('blur', function (e) {
+        const formGenderResult = document.querySelector('#form-gender-result');
+        if (isNaN(parseInt(e.target.value, 10))) {
+            formGenderResult.textContent = '성별을 선택해주세요.';
+            formGenderResult.style.color = 'red';
+            return;
+        }
+        formGenderResult.textContent = '';
+        formGenderResult.style.color = 'green';
+    });
 };
 
 SignUpHTML.prototype.setEventListenerToEmail = function () {

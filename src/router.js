@@ -30,6 +30,9 @@ function router(hashValue) {
             signUpHTML.setEventListenerToYear();
             signUpHTML.setEventListenerToDay();
 
+            // 성별 유효성 검사
+            signUpHTML.setEventListenerToGender();
+
             // 이메일 유효성 검사
             signUpHTML.setEventListenerToEmail();
 
