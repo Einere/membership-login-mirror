@@ -27,6 +27,10 @@ span {
     min-height: 1rem;
 }
 
+input[type="password"] {
+
+}
+
 /* main container */
 main.container {
 
@@ -79,22 +83,6 @@ main.container {
     height: 2rem;
     width: 30%;
 }
-
-/*.form-container .button-bar {
-    text-align: center;
-}*/
-
-/*.popup-modal-button,
-.form-container .button-bar .form-button {
-    height: 2rem;
-    width: 40%;
-    margin: 0 auto;
-    color: white;
-    background-color: forestgreen;
-    border-style: none;
-    font-weight: bold;
-    font-size: 1.1rem;
-}*/
 
 .form-container label.form-agree-bar {
     display: flex;
@@ -160,7 +148,7 @@ main.container {
 .popup-modal {
     height: 365px;
     width: 650px;
-    background-color: white;
+    background-color: whitesmoke;
     position: fixed;
     left: 50%;
     top: 50%;
@@ -247,7 +235,7 @@ main.container {
         opacity: 0;
     }
     to {
-        bottom: 30px;
+        bottom: 50px;
         opacity: 1;
     }
 }
@@ -258,14 +246,14 @@ main.container {
         opacity: 0;
     }
     to {
-        bottom: 30px;
+        bottom: 50px;
         opacity: 1;
     }
 }
 
 @-webkit-keyframes fadeout {
     from {
-        bottom: 30px;
+        bottom: 50px;
         opacity: 1;
     }
     to {
@@ -276,7 +264,7 @@ main.container {
 
 @keyframes fadeout {
     from {
-        bottom: 30px;
+        bottom: 50px;
         opacity: 1;
     }
     to {

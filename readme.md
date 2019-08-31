@@ -27,12 +27,13 @@ description : 회원가입 및 로그인 개발(front-end)
 6. 스낵바 기능 구현하기
 
 #### 8.31(토)
-1. section / article 공부하기
-2. flex 속성 공부하기
-3. css variable 공부하기
+1. section / article 공부하기 (form, modal, snackbar...)
+2. flex 속성 공부하기 및 적용하기
+3. css variable 공부하기 (스낵바 bottom...)
 4. magic number 공부하기
 5. 비밀번호 마스킹 문자 변경하기
 6. 태그 기능 구현하기 (레퍼런스 찾아보기)
+7. 정규표현식 Map을 이용해 리팩토링하기
 
 #### 9.01(일)
 

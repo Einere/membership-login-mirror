@@ -36,7 +36,7 @@ SignUpHTML.prototype.getHtml = function () {
     <!-- body overlay -->
     <div class="body-blackout"></div>
     
-    <div class="form-container">
+    <section class="form-container">
         <h2 class="form-title">회원가입</h2>
         
         <form class="form">
@@ -109,10 +109,10 @@ SignUpHTML.prototype.getHtml = function () {
                 <input type="submit" class="form-button" id="form-submit" value="회원가입">
             </div>
         </form>
-    </div>
+    </section>
     
     <!-- Modals -->
-    <div class="popup-modal shadow" data-popup-modal="one">
+    <section class="popup-modal shadow" data-popup-modal="one">
         <div class="popup-modal__close">
             <i class="fas fa-2x fa-times text-white bg-primary p-3"></i>
         </div>
@@ -154,10 +154,10 @@ SignUpHTML.prototype.getHtml = function () {
             보존 기간 : 3개월
         </textarea>
         <button class="popup-modal-button" id="popup-modal-agree-accept" disabled>동의</button> 
-    </div>
+    </section>
     
     <!-- snackbar -->
-    <div id="snackbar"></div>
+    <section id="snackbar"></section>
     `;
 };
 
