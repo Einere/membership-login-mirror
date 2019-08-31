@@ -37,11 +37,9 @@ SignUpHTML.prototype.getHtml = function () {
     <div class="body-blackout"></div>
     
     <div class="form-container">
-        <div class="form-title">
-            <h1>회원가입</h1>
-        </div>
+        <h2 class="form-title">회원가입</h2>
         
-        <form>
+        <form class="form">
             <label for="form-id">아이디</label>
             <input type="text" id="form-id">
             <span id="form-id-result"></span>
@@ -59,24 +57,27 @@ SignUpHTML.prototype.getHtml = function () {
             <span id="form-name-result"></span>
             
             <label for="form-year">생년월일</label>
-            <input type="text" id="form-year" maxlength="4" placeholder="년(4자)">
-            <select id="form-month">
-                <option value="월" selected>월</option>
-                <option value="0">1</option>
-                <option value="1">2</option>
-                <option value="2">3</option>
-                <option value="3">4</option>
-                <option value="4">5</option>
-                <option value="5">6</option>
-                <option value="6">7</option>
-                <option value="7">8</option>
-                <option value="8">9</option>
-                <option value="9">10</option>
-                <option value="10">11</option>
-                <option value="11">12</option>
-            </select>
-            <input type="text" id="form-day" maxlength="2" placeholder="일">
+            <div class="form-birth-container">
+                <input type="text" id="form-year" maxlength="4" placeholder="년(4자)">
+                <select id="form-month">
+                    <option value="월" selected>월</option>
+                    <option value="0">1</option>
+                    <option value="1">2</option>
+                    <option value="2">3</option>
+                    <option value="3">4</option>
+                    <option value="4">5</option>
+                    <option value="5">6</option>
+                    <option value="6">7</option>
+                    <option value="7">8</option>
+                    <option value="8">9</option>
+                    <option value="9">10</option>
+                    <option value="10">11</option>
+                    <option value="11">12</option>
+                </select>
+                <input type="text" id="form-day" maxlength="2" placeholder="일">
+            </div>
             <span id="form-birth-result"></span>
+            
             
             <label for="form-gender">성별</label>
             <select id="form-gender">
@@ -102,7 +103,8 @@ SignUpHTML.prototype.getHtml = function () {
                 <u class="form-agree btn btn-sm btn-primary shadow p-2 px-3 popup-trigger" data-popup-trigger="one">약관에 동의합니다.</u>
                 <input type="checkbox" id="form-agree" class="form-agree" disabled>
             </label>
-            <div class="button-bar">
+            <span id="form-agree-result"></span>
+            <div class="form-button-bar">
                 <input type="reset" class="form-button" id="form-reset"/>
                 <input type="submit" class="form-button" id="form-submit" value="회원가입">
             </div>
@@ -115,7 +117,7 @@ SignUpHTML.prototype.getHtml = function () {
             <i class="fas fa-2x fa-times text-white bg-primary p-3"></i>
         </div>
         
-        <h1 class="popup-modal-title">개인정보 수집 및 이용에 대한 안내</h1>
+        <h2 class="popup-modal-title">개인정보 수집 및 이용에 대한 안내</h2>
         <textarea class="popup-modal-agree" rows="10" readonly>
                 개인정보 수집 및 이용에 대한 안내
 
@@ -254,7 +256,7 @@ function isLeapYear(year) {
     return (year % 4 === 0) && (year % 100 !== 0) || (year % 400 === 0);
 }
 
-SignUpHTML.prototype.setEventListenerToDay = function (e) {
+SignUpHTML.prototype.setEventListenerToDay = function () {
     document.getElementById('form-day').addEventListener('blur', function (e) {
         const formBirthResult = document.querySelector('#form-birth-result');
         const formBirthMonth = document.querySelector('#form-month');
@@ -293,7 +295,7 @@ SignUpHTML.prototype.setEventListenerToGender = function () {
 };
 
 SignUpHTML.prototype.setEventListenerToEmail = function () {
-    document.getElementById('form-email').addEventListener('blur', function (e) {
+    document.getElementById('form-email').addEventListener('blur', function () {
         const formEmailResult = document.querySelector('#form-email-result');
         const formEmail = document.querySelector('#form-email');
         const regexp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
@@ -307,7 +309,7 @@ SignUpHTML.prototype.setEventListenerToEmail = function () {
 };
 
 SignUpHTML.prototype.setEventListenerToPhone = function () {
-    document.getElementById('form-phone').addEventListener('blur', function (e) {
+    document.getElementById('form-phone').addEventListener('blur', function () {
         const formPhoneResult = document.querySelector('#form-phone-result');
         const formPhone = document.querySelector('#form-phone');
         const regexp = /^(010)+\d{3,4}\d{4}$/;
@@ -367,7 +369,7 @@ SignUpHTML.prototype.setEventListenerToAgree = function () {
     });
 
     // 약관 동의 체크
-    modalAccept.addEventListener('click', function (e) {
+    modalAccept.addEventListener('click', function () {
         const formAgree = document.querySelector('#form-agree');
         formAgree.checked = true;
         this.validation.agree = true;
@@ -379,7 +381,7 @@ SignUpHTML.prototype.setEventListenerToSubmit = function () {
         e.preventDefault();
 
         let message = '';
-        const result = Object.keys(this.validation).reduce(function (acc, key, index) {
+        const result = Object.keys(this.validation).reduce(function (acc, key) {
             if (!this.validation[key]) {
                 message = message.concat(`${this.error.submit[key]} `);
             }

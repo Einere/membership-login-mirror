@@ -1,12 +1,22 @@
 @import 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,700';
 
-/* custom css */
+/* 최상위 엘리먼트들 */
 body {
     background-color: whitesmoke;
 }
 
-nav.header h1 {
+h1 {
     font-size: 3rem;
+    text-align: center;
+}
+
+h2 {
+    font-size: 2rem;
+    text-align: center;
+}
+
+h3 {
+    font-size: 1.5rem;
     text-align: center;
 }
 
@@ -14,25 +24,33 @@ span {
     display: block;
     width: 100%;
     height: auto;
+    min-height: 1rem;
 }
 
-.container {
+/* main container */
+main.container {
 
 }
 
+
+/* form-container */
 .form-container {
+    display: flex;
+    flex-direction: column;
     width: 30%;
     margin: 0 auto;
 }
 
 .form-container .form-title {
-    text-align: center;
     color: forestgreen;
-    font-size: 1.5rem;
+}
+
+.form-container .form {
+    display: flex;
+    flex-direction: column;
 }
 
 .form-container label {
-    display: block;
     font-weight: bold;
     font-size: 1.2rem;
 }
@@ -41,7 +59,6 @@ span {
 .form-container button,
 .form-container select {
     height: 2rem;
-    width: 100%;
 }
 
 .form-container input:focus,
@@ -50,23 +67,24 @@ span {
     border-color: forestgreen;
 }
 
-/*.form-container  {
-    width: auto;
-}*/
+.form-container .form-birth-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 
-.form-container #form-year,
-.form-container #form-month,
-.form-container #form-day {
+.form-container .form-birth-container #form-year,
+.form-container .form-birth-container #form-month,
+.form-container .form-birth-container #form-day {
     height: 2rem;
     width: 30%;
-    margin: 0 auto;
 }
 
-.form-container .button-bar {
+/*.form-container .button-bar {
     text-align: center;
-}
+}*/
 
-.popup-modal-button,
+/*.popup-modal-button,
 .form-container .button-bar .form-button {
     height: 2rem;
     width: 40%;
@@ -76,20 +94,19 @@ span {
     border-style: none;
     font-weight: bold;
     font-size: 1.1rem;
-}
+}*/
 
 .form-container label.form-agree-bar {
-    height: 100%;
-    line-height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .form-container label.form-agree-bar .form-agree {
-    vertical-align: text-bottom;
-    width: auto;
 }
 
 .form-container label.form-agree-bar #form-agree.form-agree {
-    vertical-align: middle;
 }
 
 .form-container u.form-agree:hover {
@@ -97,13 +114,26 @@ span {
     cursor: pointer;
 }
 
-.form-container .form-button:hover {
-    background-color: darkgreen;
-    cursor: pointer;
+.form-container .form-button-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
-.button-bar {
+.popup-modal-button,
+.form-container .form-button-bar .form-button {
+    height: 3rem;
+    width: 48%;
+    color: white;
+    background-color: forestgreen;
+    border-style: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
 
+.form-container .form-button-bar .form-button:hover {
+    background-color: darkgreen;
+    cursor: pointer;
 }
 
 
@@ -189,18 +219,15 @@ span {
 /* The snackbar - position it at the bottom and in the middle of the screen */
 #snackbar {
     visibility: hidden; /* Hidden by default. Visible on click */
-    min-width: 250px; /* Set a default minimum width */
     width: 50%;
-    /*margin-left: -125px; !* Divide value of min-width by 2 *!*/
-    margin: 0 auto;
     background-color: #333; /* Black background color */
     color: #fff; /* White text color */
     text-align: center; /* Centered text */
-    border-radius: 2px; /* Rounded borders */
+    border-radius: 10px; /* Rounded borders */
     padding: 16px; /* Padding */
-    /*position: fixed; !* Sit on top of the screen *!*/
+    position: fixed; /* Sit on top of the screen */
     z-index: 1; /* Add a z-index if needed */
-    /*left: 35%; !* Center the snackbar *!*/
+    left: 25%; /* Center the snackbar */
     bottom: 50px; /* 30px from the bottom */
 }
 
