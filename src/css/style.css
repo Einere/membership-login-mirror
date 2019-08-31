@@ -1,5 +1,9 @@
 @import 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,700';
 
+:root {
+    --snackbar-bottom: 50px;
+}
+
 /* 최상위 엘리먼트들 */
 body {
     background-color: whitesmoke;
@@ -216,7 +220,7 @@ main.container {
     position: fixed; /* Sit on top of the screen */
     z-index: 1; /* Add a z-index if needed */
     left: 25%; /* Center the snackbar */
-    bottom: 50px; /* 30px from the bottom */
+    bottom: var(--snackbar-bottom); /* 30px from the bottom */
 }
 
 /* Show the snackbar when clicking on a button (class added with JavaScript) */
@@ -235,7 +239,7 @@ main.container {
         opacity: 0;
     }
     to {
-        bottom: 50px;
+        bottom: var(--snackbar-bottom);;
         opacity: 1;
     }
 }
@@ -246,14 +250,14 @@ main.container {
         opacity: 0;
     }
     to {
-        bottom: 50px;
+        bottom: var(--snackbar-bottom);
         opacity: 1;
     }
 }
 
 @-webkit-keyframes fadeout {
     from {
-        bottom: 50px;
+        bottom: var(--snackbar-bottom);
         opacity: 1;
     }
     to {
@@ -264,7 +268,7 @@ main.container {
 
 @keyframes fadeout {
     from {
-        bottom: 50px;
+        bottom: var(--snackbar-bottom);
         opacity: 1;
     }
     to {

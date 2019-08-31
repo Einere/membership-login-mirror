@@ -383,7 +383,7 @@ SignUpHTML.prototype.setEventListenerToSubmit = function () {
         let message = '';
         const result = Object.keys(this.validation).reduce(function (acc, key) {
             if (!this.validation[key]) {
-                message = message.concat(`${this.error.submit[key]} `);
+                message = message.concat(`${this.error.submit[key]}\n`);
             }
             return acc && this.validation[key];
         }.bind(this), true);
