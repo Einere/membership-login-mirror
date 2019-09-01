@@ -1,0 +1,85 @@
+/* form-container */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    margin: 0 auto;
+}
+
+.form-container .form-title {
+    color: forestgreen;
+}
+
+.form-container .form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container label {
+    font-weight: bold;
+    font-size: var(--micro-font-size);
+}
+
+.form-container input,
+.form-container button,
+.form-container select {
+    height: var(--middle-font-size);
+}
+
+.form-container input:focus,
+.form-container select:focus {
+    border-style: solid;
+    border-color: forestgreen;
+}
+
+.form-container .form-birth-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.form-container .form-birth-container #form-year,
+.form-container .form-birth-container #form-month,
+.form-container .form-birth-container #form-day {
+    height: var(--middle-font-size);
+    width: 30%;
+}
+
+.form-container label.form-agree-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.form-container label.form-agree-bar .form-agree {
+}
+
+.form-container label.form-agree-bar #form-agree.form-agree {
+}
+
+.form-container u.form-agree:hover {
+    color: forestgreen;
+    cursor: pointer;
+}
+
+.form-container .form-button-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.form-container .form-button-bar .form-button {
+    height: var(--large-font-size);
+    width: 48%;
+    color: white;
+    background-color: forestgreen;
+    border-style: none;
+    font-weight: bold;
+    font-size: var(--micro-font-size);
+}
+
+.form-container .form-button-bar .form-button:hover {
+    background-color: darkgreen;
+    cursor: pointer;
+}

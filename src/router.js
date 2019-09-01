@@ -17,6 +17,9 @@ function router(hashValue) {
             const signUpHTML = new SignUpHTML();
             setContent(signUpHTML.getHtml());
 
+            // form 기본 세팅
+            signUpHTML.setEventListenerToForm();
+
             // id 유효성 검사
             signUpHTML.setEventListenerToId();
 
@@ -41,6 +44,10 @@ function router(hashValue) {
 
             // 핸드폰 유효성 검사
             signUpHTML.setEventListenerToPhone();
+
+            // 관심사 세팅, 유효성 검사
+            signUpHTML.setInputTags();
+            signUpHTML.setEventListenerToInteresting();
 
             // 모달 세팅
             signUpHTML.setEventListenerToAgree();

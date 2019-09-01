@@ -1,3 +1,5 @@
+import {InputTags} from "./InputTags.js";
+
 function SignUpHTML() {
     this.days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     this.validation = {
@@ -96,7 +98,9 @@ SignUpHTML.prototype.getHtml = function () {
             <span id="form-phone-result"></span>
             
             <label for="form-interesting">관심사</label>
-            <input type="text" id="form-interesting"/>
+            <div id="tags">
+                <input type="text" id="form-interesting"/>
+            </div>
             <span id="form-interesting-result"></span>
             
             <label for="form-agree" class="form-agree-bar">
@@ -167,6 +171,19 @@ SignUpHTML.prototype.setResult = function (target, key, index) {
     target.textContent = error.message;
     target.style.color = error.success ? "green" : "red";
     this.validation[key] = error.success;
+};
+
+SignUpHTML.prototype.setEventListenerToForm = function () {
+    const inputs = document.getElementsByTagName('input');
+
+    for (const input of inputs) {
+        input.addEventListener('keyup', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        })
+    }
 };
 
 SignUpHTML.prototype.setEventListenerToId = function () {
@@ -322,8 +339,18 @@ SignUpHTML.prototype.setEventListenerToPhone = function () {
     }.bind(this));
 };
 
-SignUpHTML.prototype.setEventListenerToInteresting = function () {
+SignUpHTML.prototype.setInputTags = function () {
+    new InputTags({
+        id: 'form-interesting',
+        maxTags: 10,
+        allowDuplicateTags: false,
+    });
+};
 
+SignUpHTML.prototype.setEventListenerToInteresting = function () {
+    document.getElementById('form-interesting').addEventListener('blur', function (e) {
+        console.log(e);
+    })
 };
 
 SignUpHTML.prototype.setEventListenerToAgree = function () {
@@ -409,5 +436,6 @@ SignUpHTML.prototype.showSnackBar = function (message) {
         toast.classList.remove("show")
     }, 3000);
 };
+
 
 export {SignUpHTML};

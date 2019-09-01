@@ -1,0 +1,86 @@
+/* modal */
+.body-blackout {
+    position: fixed;
+    z-index: 1010;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .65);
+    display: none;
+}
+
+.body-blackout.is-blacked-out {
+    display: block;
+}
+
+.popup-trigger {
+    display: inline-block;
+}
+
+.popup-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 40%;
+    width: 50%;
+    background-color: whitesmoke;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 45px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 300ms ease-in-out;
+    z-index: 1011;
+}
+
+.popup-modal.is--visible {
+    opacity: 1;
+    pointer-events: auto;
+    content: " (" attr(open) ")";
+}
+
+.popup-modal__close {
+    display: block;
+    text-align: center;
+    position: absolute;
+    background-color: black;
+    color: white;
+    font-size: var(--micro-font-size);
+    width: var(--large-font-size);
+    line-height: var(--large-font-size);
+    height: var(--large-font-size);
+    right: -10px;
+    top: -10px;
+    cursor: pointer;
+}
+
+.popup-modal__close i {
+    vertical-align: sub;
+}
+
+.popup-modal .popup-modal-agree {
+    height: 50%;
+    width: 100%;
+    resize: none;
+}
+
+.popup-modal-button {
+    height: var(--large-font-size);
+    width: 48%;
+    color: white;
+    background-color: forestgreen;
+    border-style: none;
+    font-weight: bold;
+    font-size: var(--micro-font-size);
+    cursor: pointer;
+
+}
+
+.popup-modal-button:disabled {
+    background-color: darkred;
+    cursor: not-allowed;
+}

@@ -1,0 +1,59 @@
+@charset "UTF-8";
+/* line 6, ../sass/inputTag.scss */
+#tags {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    max-width: 100%;
+    width: 100%;
+    border: 1px solid rgba(128, 128, 128, 50%);
+    background-color: white;
+    cursor: text;
+}
+
+#tags:focus {
+    border-style: solid;
+    border-color: forestgreen;
+}
+
+#tags .tag {
+    position: relative;
+    width: auto;
+    color: #FFFFFF;
+    background: yellowgreen;
+    border-radius: 5px;
+    padding: 5px 20px 5px 5px;
+    margin: 4px;
+    transition: all 0.3s ease-in-out;
+}
+
+#tags .tag .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1rem;
+    height: 100%;
+    background: #75ac0a;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+    text-align: center;
+    transition: background 0.3s;
+}
+
+#tags .tag .close:after {
+    content: "×";
+    font-weight: bold;
+    vertical-align: sub;
+}
+
+#tags .tag .close:hover {
+    background: rgba(215, 65, 70, 0.87);
+}
+
+#tags input {
+    border: 0;
+    width: auto;
+    outline: none;
+    background-color: transparent;
+}
