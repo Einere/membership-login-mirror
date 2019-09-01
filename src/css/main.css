@@ -36,6 +36,13 @@ span {
     min-height: 1rem;
 }
 
+input, select, textarea {
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
 input[type="password"] {
 
 }

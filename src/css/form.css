@@ -29,7 +29,10 @@
 .form-container input:focus,
 .form-container select:focus {
     border-style: solid;
+    /* for input */
     border-color: forestgreen;
+    /* for select */
+    outline-color: forestgreen;
 }
 
 .form-container .form-birth-container {

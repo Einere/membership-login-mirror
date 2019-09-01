@@ -2,6 +2,12 @@ import {InputTags} from "./InputTags.js";
 
 function SignUpHTML() {
     this.days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    this.regExp = {
+        id: /^(?=.*[a-z])(?=.*[0-9])[a-z0-9\-_]{5,20}$/,
+        pw: [/^.{8,16}$/, /[A-Z]+/, /[0-9]+/, /[!@#$%^&*]+/],
+        email: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/,
+        phone: /^(010)+\d{3,4}\d{4}$/
+    };
     this.validation = {
         id: false,
         pw: false,
@@ -176,6 +182,7 @@ SignUpHTML.prototype.setResult = function (target, key, index) {
 SignUpHTML.prototype.setEventListenerToForm = function () {
     const inputs = document.getElementsByTagName('input');
 
+    // todo: input에서 enter입력시 스낵바가 뜨는 것을 막는다
     for (const input of inputs) {
         input.addEventListener('keyup', function (e) {
             if (e.key === 'Enter') {
@@ -188,10 +195,10 @@ SignUpHTML.prototype.setEventListenerToForm = function () {
 
 SignUpHTML.prototype.setEventListenerToId = function () {
     document.getElementById('form-id').addEventListener('blur', function (e) {
-        const regexp = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9\-_]{5,20}$/;
         const formIdResult = document.querySelector('#form-id-result');
 
-        if (regexp.test(e.target.value)) {
+        // 아이디가 유효한지 검사한다
+        if (this.regExp.id.test(e.target.value)) {
             this.setResult(formIdResult, 'id', 0);
         } else {
             this.setResult(formIdResult, 'id', 1);
@@ -204,23 +211,16 @@ SignUpHTML.prototype.setEventListenerToPw = function () {
     document.getElementById('form-pw').addEventListener('blur', function (e) {
         const formPwResult = document.querySelector('#form-pw-result');
 
-        if (!/^.{8,16}$/.test(e.target.value)) {
-            this.setResult(formPwResult, 'pw', 1);
-            return;
-        }
-        if (!/[A-Z]+/.test(e.target.value)) {
-            this.setResult(formPwResult, 'pw', 2);
-            return;
-        }
-        if (!/[0-9]+/.test(e.target.value)) {
-            this.setResult(formPwResult, 'pw', 3);
-            return;
-        }
-        if (!/[!@#$%^&*]+/.test(e.target.value)) {
-            this.setResult(formPwResult, 'pw', 4);
-            return;
-        }
-        this.setResult(formPwResult, 'pw', 0);
+        // 비밀번호가 각 조건을 만족하지 않는다면 해당하는 에러 메세지를 표시한다
+        const isValid = this.regExp.pw.some((regexp, index) => {
+            if (!regexp.test(e.target.value)) {
+                this.setResult(formPwResult, 'pw', index + 1);
+                return true;
+            }
+        });
+
+        // 모든 조건을 만족한 경우
+        if (!isValid) this.setResult(formPwResult, 'pw', 0);
     }.bind(this));
 };
 
@@ -229,6 +229,7 @@ SignUpHTML.prototype.setEventListenerToPwCheck = function () {
         const formPwCheckResult = document.querySelector('#form-pw-check-result');
         const formPw = document.querySelector('#form-pw');
 
+        // 비밀번호와 비밀번호 재확인이 동일한지 검사한다
         if (formPw.value !== e.target.value) {
             this.setResult(formPwCheckResult, 'pwCheck', 1);
         } else {
@@ -242,6 +243,7 @@ SignUpHTML.prototype.setEventListenerToName = function () {
     document.getElementById('form-name').addEventListener('blur', function (e) {
         const formNameResult = document.querySelector('#form-name-result');
 
+        // 이름을 입력했는지 검사한다
         if (!e.target.value) {
             this.setResult(formNameResult, 'name', 1);
         } else {
@@ -255,12 +257,14 @@ SignUpHTML.prototype.setEventListenerToYear = function () {
         const formBirthResult = document.querySelector('#form-birth-result');
         const birthYear = parseInt(e.target.value, 10);
 
+        // 유효한 년을 입력했는지 검사한다
         if (isNaN(birthYear)) {
             this.setResult(formBirthResult, 'year', 1);
             return;
         }
 
         const age = new Date().getFullYear() - birthYear;
+        // 특정 범위 내의 나이인지 검사한다
         if (age < 15 || age > 99) {
             this.setResult(formBirthResult, 'year', 2);
             return;
@@ -280,16 +284,16 @@ SignUpHTML.prototype.setEventListenerToDay = function () {
         const birthDay = parseInt(e.target.value);
         let birthMonth = parseInt(formBirthMonth.value, 10);
 
+        // 월을 선택하지 않으면 에러 메세지를 표시한다
         if (isNaN(birthMonth)) {
             this.setResult(formBirthResult, 'month', 1);
             return;
         }
 
-
         const formBirthYear = document.querySelector('#form-year');
         this.days[1] = isLeapYear(formBirthYear.value) ? 29 : 28;
-        console.log(this.days[1]);
 
+        // 유효한 일을 선택했는지 검사한다
         if (birthDay < 1 || birthDay > this.days[birthMonth]) {
             this.setResult(formBirthResult, 'day', 1);
             return;
@@ -303,6 +307,8 @@ SignUpHTML.prototype.setEventListenerToDay = function () {
 SignUpHTML.prototype.setEventListenerToGender = function () {
     document.getElementById('form-gender').addEventListener('blur', function (e) {
         const formGenderResult = document.querySelector('#form-gender-result');
+
+        // 성별을 선택하지 않으면 에러 메세지를 표시한다
         if (isNaN(parseInt(e.target.value, 10))) {
             this.setResult(formGenderResult, 'gender', 1);
         } else {
@@ -315,9 +321,9 @@ SignUpHTML.prototype.setEventListenerToEmail = function () {
     document.getElementById('form-email').addEventListener('blur', function () {
         const formEmailResult = document.querySelector('#form-email-result');
         const formEmail = document.querySelector('#form-email');
-        const regexp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
 
-        if (!regexp.test(formEmail.value)) {
+        // 정해진 이메일 양식을 만족하지 못하면 에러 메세지를 표시한다
+        if (!this.regExp.email.test(formEmail.value)) {
             this.setResult(formEmailResult, 'email', 1);
         } else {
             this.setResult(formEmailResult, 'email', 0);
@@ -329,9 +335,9 @@ SignUpHTML.prototype.setEventListenerToPhone = function () {
     document.getElementById('form-phone').addEventListener('blur', function () {
         const formPhoneResult = document.querySelector('#form-phone-result');
         const formPhone = document.querySelector('#form-phone');
-        const regexp = /^(010)+\d{3,4}\d{4}$/;
 
-        if (!regexp.test(formPhone.value)) {
+        // 정해진 휴대폰 번호 양식을 만족하지 못하면 에러 메세지를 표시한다
+        if (!this.regExp.phone.test(formPhone.value)) {
             this.setResult(formPhoneResult, 'phone', 1);
         } else {
             this.setResult(formPhoneResult, 'phone', 0);
@@ -353,6 +359,7 @@ SignUpHTML.prototype.setEventListenerToInteresting = function () {
         const formInterestingResult = document.getElementById('form-interesting-result');
         const tagList = formTagInput.value ? formTagInput.value.split(',') : [];
 
+        // 관심사가 세개 이하면 에러 메세지를 표시한다
         if (tagList.length < 3) {
             this.setResult(formInterestingResult, 'interesting', 1);
         } else {
@@ -413,9 +420,11 @@ SignUpHTML.prototype.setEventListenerToAgree = function () {
 
 SignUpHTML.prototype.setEventListenerToSubmit = function () {
     document.querySelector('#form-submit').addEventListener('click', function (e) {
+        // 기본 제출 이벤트를 막는다
         e.preventDefault();
 
         let message = '';
+        // 모든 유효성을 만족하는지 결과값을 추출한다
         const result = Object.keys(this.validation).reduce(function (acc, key) {
             if (!this.validation[key]) {
                 message = message.concat(`${this.error.submit[key]}\n`);
