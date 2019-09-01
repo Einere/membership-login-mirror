@@ -1,0 +1,38 @@
+section.login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    margin: 0 auto;
+}
+
+section.login input,
+section.login button {
+    height: var(--middle-font-size);
+    width: 50%;
+    margin-bottom: 1rem;
+}
+
+section.login input:focus {
+    border-style: solid;
+    /* for input */
+    border-color: forestgreen;
+
+}
+
+section.login button {
+    height: var(--large-font-size);
+    width: 50%;
+    color: white;
+    background-color: forestgreen;
+    border-style: none;
+    font-weight: bold;
+    font-size: var(--micro-font-size);
+}
+
+section.login button:hover {
+    background-color: darkgreen;
+    cursor: pointer;
+}
+

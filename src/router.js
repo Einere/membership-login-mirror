@@ -1,5 +1,6 @@
-import {getHomeHTML} from "./lib/getHomeHTML.js";
+import {homeHTML} from "./lib/HomeHTML.js";
 import {SignUpHTML} from './lib/SignUpHTML.js';
+import {logInHTML} from './lib/LogInHTML.js';
 
 function setContent(htmlStr) {
     const container = document.querySelector('.container');
@@ -10,7 +11,7 @@ function setContent(htmlStr) {
 function router(hashValue) {
     switch (hashValue) {
         case '': {
-            setContent(getHomeHTML());
+            setContent(homeHTML());
             break;
         }
         case 'signup': {
@@ -59,7 +60,9 @@ function router(hashValue) {
         case 'submit': {
             setContent(`<h1>you submitted form</h1>`);
         }
-
+        case `login`: {
+            setContent(logInHTML());
+        }
         default: {
             break;
         }
