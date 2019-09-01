@@ -348,9 +348,17 @@ SignUpHTML.prototype.setInputTags = function () {
 };
 
 SignUpHTML.prototype.setEventListenerToInteresting = function () {
-    document.getElementById('form-interesting').addEventListener('blur', function (e) {
-        console.log(e);
-    })
+    document.getElementById('form-interesting').addEventListener('blur', function () {
+        const formTagInput = document.getElementById('tagInput');
+        const formInterestingResult = document.getElementById('form-interesting-result');
+        const tagList = formTagInput.value ? formTagInput.value.split(',') : [];
+
+        if (tagList.length < 3) {
+            this.setResult(formInterestingResult, 'interesting', 1);
+        } else {
+            this.setResult(formInterestingResult, 'interesting', 0);
+        }
+    }.bind(this));
 };
 
 SignUpHTML.prototype.setEventListenerToAgree = function () {
@@ -417,6 +425,8 @@ SignUpHTML.prototype.setEventListenerToSubmit = function () {
 
         if (!result) {
             this.showSnackBar(message);
+        } else {
+            location.hash = 'submit';
         }
     }.bind(this));
 };

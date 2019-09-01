@@ -115,6 +115,16 @@
       "message": "형식에 맞지 않는 번호입니다."
     }
   ],
+  "interesting": [
+    {
+      "success": true,
+      "message": ""
+    },
+    {
+      "success": false,
+      "message": "관심사를 세개 이상 입력해주세요."
+    }
+  ],
   "submit": {
     "id": "아이디를 확인해주세요.",
     "pw": "비밀번호를 확인해주세요.",

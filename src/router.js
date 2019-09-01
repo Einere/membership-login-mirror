@@ -56,6 +56,10 @@ function router(hashValue) {
             signUpHTML.setEventListenerToSubmit();
             break;
         }
+        case 'submit': {
+            setContent(`<h1>you submitted form</h1>`);
+        }
+
         default: {
             break;
         }
