@@ -1,4 +1,5 @@
 import {InputTags} from "../lib/InputTags.js";
+import {makeInputNode} from "../lib/makeInputNode.js";
 
 function SignUpHTML() {
     this.days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -48,25 +49,29 @@ SignUpHTML.prototype.getHtml = function () {
         <h2 class="form-title">회원가입</h2>
         
         <form class="form">
-            <label for="form-id">아이디</label>
+            <!--<label for="form-id">아이디</label>
             <input type="text" id="form-id">
-            <span id="form-id-result"></span>
+            <span id="form-id-result"></span>-->
+            ${makeInputNode("id", "아이디")}
            
-            <label for="form-pw">비밀번호</label>
+            <!--<label for="form-pw">비밀번호</label>
             <input type="password" id="form-pw">
-            <span id="form-pw-result"></span>
+            <span id="form-pw-result"></span>-->
+            ${makeInputNode("pw", "비밀번호", "password")}
             
-            <label for="form-pw-check">비밀번호 재확인</label>
+            <!--<label for="form-pw-check">비밀번호 재확인</label>
             <input type="password" id="form-pw-check">
-            <span id="form-pw-check-result"></span>
+            <span id="form-pw-check-result"></span>-->
+            ${makeInputNode("pw-check", "비밀번호 재확인", "password")}
             
-            <label for="form-name">이름</label>
+            <!--<label for="form-name">이름</label>
             <input type="text" id="form-name">
-            <span id="form-name-result"></span>
+            <span id="form-name-result"></span>-->
+            ${makeInputNode("name", "이름")}
             
             <label for="form-year">생년월일</label>
             <div class="form-birth-container">
-                <input type="text" id="form-year" maxlength="4" placeholder="년(4자)">
+                <input type="text" id="form-year" type="number" maxlength="4" placeholder="년(4자)">
                 <select id="form-month">
                     <option value="월" selected>월</option>
                     <option value="0">1</option>
@@ -82,7 +87,7 @@ SignUpHTML.prototype.getHtml = function () {
                     <option value="10">11</option>
                     <option value="11">12</option>
                 </select>
-                <input type="text" id="form-day" maxlength="2" placeholder="일">
+                <input type="text" id="form-day" type="number" maxlength="2" placeholder="일">
             </div>
             <span id="form-birth-result"></span>
             
@@ -95,13 +100,15 @@ SignUpHTML.prototype.getHtml = function () {
             </select>
             <span id="form-gender-result"></span>
             
-            <label for="form-email">이메일</label>
+            <!--<label for="form-email">이메일</label>
             <input type="email" id="form-email"/>
-            <span id="form-email-result"></span>
+            <span id="form-email-result"></span>-->
+            ${makeInputNode("email", "이메일")}
             
-            <label for="form-phone">휴대전화</label>
+            <!--<label for="form-phone">휴대전화</label>
             <input type="text" id="form-phone" placeholder="-없이 입력해주세요. 예)01012345678"/>
-            <span id="form-phone-result"></span>
+            <span id="form-phone-result"></span>-->
+            ${makeInputNode("phone", "휴대전화", "number", "-없이 입력해주세요. 예)01012345678")}
             
             <label for="form-interesting">관심사</label>
             <div id="tags">
@@ -454,6 +461,17 @@ SignUpHTML.prototype.showSnackBar = function (message) {
     setTimeout(function () {
         toast.classList.remove("show")
     }, 3000);
+};
+
+SignUpHTML.prototype.setEventListenerToReset = function () {
+    document.getElementsByClassName('form')[0].addEventListener('reset', function () {
+        for (const key in this.validation) {
+            if (this.validation.hasOwnProperty(key))
+                this.validation[key] = false;
+        }
+
+        document.getElementById('tagInput').value = '';
+    }.bind(this));
 };
 
 

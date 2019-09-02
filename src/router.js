@@ -53,15 +53,20 @@ function router(hashValue) {
             // 모달 세팅
             signUpHTML.setEventListenerToAgree();
 
+            // 초기화 세팅
+            signUpHTML.setEventListenerToReset();
+
             // 제출 세팅
             signUpHTML.setEventListenerToSubmit();
             break;
         }
         case 'submit': {
             setContent(`<h1>you submitted form</h1>`);
+            break;
         }
         case `login`: {
             setContent(logInHTML());
+            break;
         }
         default: {
             break;
