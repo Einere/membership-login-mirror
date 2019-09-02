@@ -98,7 +98,8 @@ SignUpHTML.prototype.getHtml = function () {
             <span id="form-agree-result"></span>
             <div class="form-button-bar">
                 <input type="reset" class="form-button" id="form-reset"/>
-                <input type="submit" class="form-button" id="form-submit" value="회원가입">
+<!--                <input type="submit" class="form-button" id="form-submit" value="회원가입">-->
+                <button class="form-button" id="form-submit">회원가입</button>
             </div>
         </form>
     </section>
@@ -164,14 +165,14 @@ SignUpHTML.prototype.setResult = function (target, key, index) {
 SignUpHTML.prototype.setEventListenerToForm = function () {
     const inputs = document.getElementsByTagName('input');
 
-    // todo: input에서 enter입력시 스낵바가 뜨는 것을 막는다
+    // form내부 input에서 enter입력시 스낵바가 뜨는 것을 막는다
     for (const input of inputs) {
-        input.addEventListener('keyup', function (e) {
+        input.addEventListener('keydown', function (e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 e.stopPropagation();
             }
-        })
+        });
     }
 };
 

@@ -46,7 +46,7 @@ description : 회원가입 및 로그인 개발(front-end)
 #### 9.02(월)
 1. form입력 데이터를 post로 데이터 보내는 것 고려하기
 2. 초기화시 데이터 초기화하기(this.validation, tagInputs 등등..)
-3. pjax로 구조를 변경하기
+
 
 #### 9.03(화)
 
