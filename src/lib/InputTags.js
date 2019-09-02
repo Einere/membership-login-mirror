@@ -78,9 +78,7 @@ InputTags.prototype.create = function (tag_txt) {
 
         const span_tag_close = document.createElement('span');
         span_tag_close.setAttribute('class', 'close');
-        span_tag_close.addEventListener('click', function () {
-            this.remove();
-        }.bind(this));
+        span_tag_close.addEventListener('click', () => span_tag.remove());
         span_tag.appendChild(span_tag_close);
 
         this.tagsContainer.insertBefore(span_tag, input_hidden_field);
