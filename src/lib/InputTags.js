@@ -84,7 +84,6 @@ InputTags.prototype.create = function (tag_txt) {
         span_tag.appendChild(span_tag_close);
 
         this.tagsContainer.insertBefore(span_tag, input_hidden_field);
-
         this.update();
     }
 };
@@ -116,6 +115,16 @@ InputTags.prototype.showDuplicate = function (tag_value) {
             duplicated.removeAttribute('style');
         }, 1100);
     }
+};
+
+InputTags.prototype.reset = function () {
+    const tags = [...this.tagsContainer.getElementsByClassName('tag')];
+    const tagInput = document.getElementById('tagInput');
+
+    // 모든 자식 태그 제거, 보관중인 값과 중복확인을 위해 보관중인 값을 초기화
+    Array.prototype.forEach.call(tags, (tag) => tag.remove());
+    tagInput.value = '';
+    this.tags_array = [];
 };
 
 export {InputTags};

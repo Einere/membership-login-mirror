@@ -23,6 +23,8 @@ function SignUpHTML() {
         interesting: false,
         agree: false
     };
+    this.inputTags = undefined;
+
     readTextFile('./src/data/error.json', function (text) {
         this.error = JSON.parse(text);
     }.bind(this));
@@ -353,7 +355,7 @@ SignUpHTML.prototype.setEventListenerToPhone = function () {
 };
 
 SignUpHTML.prototype.setInputTags = function () {
-    new InputTags({
+    this.inputTags = new InputTags({
         id: 'form-interesting',
         maxTags: 10,
         allowDuplicateTags: false,
@@ -470,7 +472,8 @@ SignUpHTML.prototype.setEventListenerToReset = function () {
                 this.validation[key] = false;
         }
 
-        document.getElementById('tagInput').value = '';
+        // document.getElementById('tagInput').value = '';
+        this.inputTags.reset();
     }.bind(this));
 };
 
