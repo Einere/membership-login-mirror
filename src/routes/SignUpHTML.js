@@ -51,29 +51,13 @@ SignUpHTML.prototype.getHtml = function () {
         <h2 class="form-title">회원가입</h2>
         
         <form class="form">
-            <!--<label for="form-id">아이디</label>
-            <input type="text" id="form-id">
-            <span id="form-id-result"></span>-->
             ${makeInputNode("id", "아이디")}
-           
-            <!--<label for="form-pw">비밀번호</label>
-            <input type="password" id="form-pw">
-            <span id="form-pw-result"></span>-->
             ${makeInputNode("pw", "비밀번호", "password")}
-            
-            <!--<label for="form-pw-check">비밀번호 재확인</label>
-            <input type="password" id="form-pw-check">
-            <span id="form-pw-check-result"></span>-->
             ${makeInputNode("pw-check", "비밀번호 재확인", "password")}
-            
-            <!--<label for="form-name">이름</label>
-            <input type="text" id="form-name">
-            <span id="form-name-result"></span>-->
             ${makeInputNode("name", "이름")}
-            
             <label for="form-year">생년월일</label>
             <div class="form-birth-container">
-                <input type="text" id="form-year" type="number" maxlength="4" placeholder="년(4자)">
+                <input type="number" id="form-year" maxlength="4" placeholder="년(4자)">
                 <select id="form-month">
                     <option value="월" selected>월</option>
                     <option value="0">1</option>
@@ -89,11 +73,9 @@ SignUpHTML.prototype.getHtml = function () {
                     <option value="10">11</option>
                     <option value="11">12</option>
                 </select>
-                <input type="text" id="form-day" type="number" maxlength="2" placeholder="일">
+                <input type="number" id="form-day" maxlength="2" placeholder="일">
             </div>
             <span id="form-birth-result"></span>
-            
-            
             <label for="form-gender">성별</label>
             <select id="form-gender">
                 <option value="성별" selected>성별</option>
@@ -101,17 +83,8 @@ SignUpHTML.prototype.getHtml = function () {
                 <option value="1">녀</option>
             </select>
             <span id="form-gender-result"></span>
-            
-            <!--<label for="form-email">이메일</label>
-            <input type="email" id="form-email"/>
-            <span id="form-email-result"></span>-->
             ${makeInputNode("email", "이메일")}
-            
-            <!--<label for="form-phone">휴대전화</label>
-            <input type="text" id="form-phone" placeholder="-없이 입력해주세요. 예)01012345678"/>
-            <span id="form-phone-result"></span>-->
             ${makeInputNode("phone", "휴대전화", "number", "-없이 입력해주세요. 예)01012345678")}
-            
             <label for="form-interesting">관심사</label>
             <div id="tags">
                 <input type="text" id="form-interesting"/>
@@ -427,6 +400,22 @@ SignUpHTML.prototype.setEventListenerToAgree = function () {
     }.bind(this));
 };
 
+SignUpHTML.prototype.makeFormData = function () {
+    const formData = new FormData();
+    formData.append('id', document.getElementById('form-id').value);
+    formData.append('pw', document.getElementById('form-pw-check').value);
+    formData.append('name', document.getElementById('form-name').value);
+    formData.append('year', document.getElementById('form-year').value);
+    formData.append('month', document.getElementById('form-month').value);
+    formData.append('day', document.getElementById('form-day').value);
+    formData.append('gender', document.getElementById('form-gender').value);
+    formData.append('email', document.getElementById('form-email').value);
+    formData.append('phone', document.getElementById('form-phone').value);
+    formData.append('interesting', document.getElementById('tagInput').value.split(','));
+
+    return formData;
+};
+
 SignUpHTML.prototype.setEventListenerToSubmit = function () {
     document.querySelector('#form-submit').addEventListener('click', function (e) {
         // 기본 제출 이벤트를 막는다
@@ -444,7 +433,18 @@ SignUpHTML.prototype.setEventListenerToSubmit = function () {
         if (!result) {
             this.showSnackBar(message);
         } else {
-            location.hash = 'submit';
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", '#submit', true);
+            xhr.setRequestHeader("Content-Type", "multipart/form-data");
+
+            xhr.onreadystatechange = function () {
+                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                    // go to #login
+                    location.hash = 'login';
+                }
+            };
+
+            xhr.send(this.makeFormData());
         }
     }.bind(this));
 };

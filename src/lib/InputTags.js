@@ -108,7 +108,8 @@ InputTags.prototype.showDuplicate = function (tag_value) {
 
     const duplicated = Array.prototype.find.call(tags, (tag) => tag.textContent === tag_value.toUpperCase());
     if (duplicated) {
-        duplicated.style.background = '#636363d9';
+        // duplicated.style.background = '#636363d9';
+        duplicated.style.background = '#FF0000FF';
         window.setTimeout(function () {
             duplicated.removeAttribute('style');
         }, 1100);
