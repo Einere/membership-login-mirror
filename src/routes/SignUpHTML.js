@@ -84,7 +84,7 @@ SignUpHTML.prototype.getHtml = function () {
             </select>
             <span id="form-gender-result"></span>
             ${makeInputNode("email", "이메일")}
-            ${makeInputNode("phone", "휴대전화", "number", "-없이 입력해주세요. 예)01012345678")}
+            ${makeInputNode("phone", "휴대전화", "text", "-없이 입력해주세요. 예)01012345678")}
             <label for="form-interesting">관심사</label>
             <div id="tags">
                 <input type="text" id="form-interesting"/>
