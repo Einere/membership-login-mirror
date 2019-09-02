@@ -1,4 +1,4 @@
-import {InputTags} from "./InputTags.js";
+import {InputTags} from "../lib/InputTags.js";
 
 function SignUpHTML() {
     this.days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];

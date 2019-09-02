@@ -1,6 +1,6 @@
-import {homeHTML} from "./lib/HomeHTML.js";
-import {SignUpHTML} from './lib/SignUpHTML.js';
-import {logInHTML} from './lib/LogInHTML.js';
+import {homeHTML} from "./routes/HomeHTML.js";
+import {SignUpHTML} from './routes/SignUpHTML.js';
+import {logInHTML} from './routes/LogInHTML.js';
 
 function setContent(htmlStr) {
     const container = document.querySelector('.container');
