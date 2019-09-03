@@ -50,6 +50,9 @@ description : 회원가입 및 로그인 개발(front-end)
 
 #### 9.03(화)
 1. 홈 화면 수정 (로그인과 회원가입을 한 화면에 표시)
+2. postRender라는 함수를 만들어, 그안에서 event listener를 등록하는 모든 메소드를 실행시키기.
+3. fetch api 공부하기
+4. css는 class를 이용해 표현하기
 
 ## 개발환경
 1. jQuery, React, Vue, lodash, bootstrap, materialUI 등의 라이브러리는 사용할 수 없다.
