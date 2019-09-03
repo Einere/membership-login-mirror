@@ -30,6 +30,7 @@ function SignUpHTML() {
     }.bind(this));
 }
 
+// 로컬에서 파일을 읽는 함수
 function readTextFile(file, callback) {
     const rawFile = new XMLHttpRequest();
     rawFile.overrideMimeType("application/json");
@@ -42,9 +43,10 @@ function readTextFile(file, callback) {
     rawFile.send(null);
 }
 
+// 회원가입 html을 반환하는 함수
 SignUpHTML.prototype.getHtml = function () {
     return `
-    <!-- body overlay -->
+    <!-- for modal -->
     <div class="body-blackout"></div>
     
     <section class="form-container">
@@ -154,6 +156,7 @@ SignUpHTML.prototype.getHtml = function () {
     `;
 };
 
+// 각 input에 대해 결과를 표시하는 함수
 SignUpHTML.prototype.setResult = function (target, key, index) {
     const error = this.error[key][index];
 
@@ -210,10 +213,9 @@ SignUpHTML.prototype.setEventListenerToPw = function () {
 SignUpHTML.prototype.setEventListenerToPwCheck = function () {
     document.getElementById('form-pw-check').addEventListener('blur', function (e) {
         const formPwCheckResult = document.querySelector('#form-pw-check-result');
-        const formPw = document.querySelector('#form-pw');
 
         // 비밀번호와 비밀번호 재확인이 동일한지 검사한다
-        if (formPw.value !== e.target.value) {
+        if (document.querySelector('#form-pw').value !== e.target.value) {
             this.setResult(formPwCheckResult, 'pwCheck', 1);
         } else {
             this.setResult(formPwCheckResult, 'pwCheck', 0);
@@ -250,12 +252,13 @@ SignUpHTML.prototype.setEventListenerToYear = function () {
         // 특정 범위 내의 나이인지 검사한다
         if (age < 15 || age > 99) {
             this.setResult(formBirthResult, 'year', 2);
-            return;
+        } else {
+            this.setResult(formBirthResult, 'year', 0);
         }
-        this.setResult(formBirthResult, 'year', 0);
     }.bind(this));
 };
 
+// 윤년인지 검사하는 함수
 function isLeapYear(year) {
     return (year % 4 === 0) && (year % 100 !== 0) || (year % 400 === 0);
 }
@@ -263,9 +266,8 @@ function isLeapYear(year) {
 SignUpHTML.prototype.setEventListenerToDay = function () {
     document.getElementById('form-day').addEventListener('blur', function (e) {
         const formBirthResult = document.querySelector('#form-birth-result');
-        const formBirthMonth = document.querySelector('#form-month');
+        const birthMonth = parseInt(document.querySelector('#form-month').value, 10);
         const birthDay = parseInt(e.target.value);
-        let birthMonth = parseInt(formBirthMonth.value, 10);
 
         // 월을 선택하지 않으면 에러 메세지를 표시한다
         if (isNaN(birthMonth)) {
@@ -273,16 +275,16 @@ SignUpHTML.prototype.setEventListenerToDay = function () {
             return;
         }
 
-        const formBirthYear = document.querySelector('#form-year');
-        this.days[1] = isLeapYear(formBirthYear.value) ? 29 : 28;
+        // 윤년 여부에 따라 2월의 최대 일 수를 변경한다
+        this.days[1] = isLeapYear(document.querySelector('#form-year').value) ? 29 : 28;
 
         // 유효한 일을 선택했는지 검사한다
         if (birthDay < 1 || birthDay > this.days[birthMonth]) {
             this.setResult(formBirthResult, 'day', 1);
-            return;
+        } else {
+            this.setResult(formBirthResult, 'month', 0);
+            this.setResult(formBirthResult, 'day', 0);
         }
-        this.setResult(formBirthResult, 'month', 0);
-        this.setResult(formBirthResult, 'day', 0);
     }.bind(this));
 };
 
@@ -303,10 +305,9 @@ SignUpHTML.prototype.setEventListenerToGender = function () {
 SignUpHTML.prototype.setEventListenerToEmail = function () {
     document.getElementById('form-email').addEventListener('blur', function () {
         const formEmailResult = document.querySelector('#form-email-result');
-        const formEmail = document.querySelector('#form-email');
 
         // 정해진 이메일 양식을 만족하지 못하면 에러 메세지를 표시한다
-        if (!this.regExp.email.test(formEmail.value)) {
+        if (!this.regExp.email.test(document.querySelector('#form-email').value)) {
             this.setResult(formEmailResult, 'email', 1);
         } else {
             this.setResult(formEmailResult, 'email', 0);
@@ -317,10 +318,9 @@ SignUpHTML.prototype.setEventListenerToEmail = function () {
 SignUpHTML.prototype.setEventListenerToPhone = function () {
     document.getElementById('form-phone').addEventListener('blur', function () {
         const formPhoneResult = document.querySelector('#form-phone-result');
-        const formPhone = document.querySelector('#form-phone');
 
         // 정해진 휴대폰 번호 양식을 만족하지 못하면 에러 메세지를 표시한다
-        if (!this.regExp.phone.test(formPhone.value)) {
+        if (!this.regExp.phone.test(document.querySelector('#form-phone').value)) {
             this.setResult(formPhoneResult, 'phone', 1);
         } else {
             this.setResult(formPhoneResult, 'phone', 0);
@@ -401,6 +401,7 @@ SignUpHTML.prototype.setEventListenerToAgree = function () {
     }.bind(this));
 };
 
+// 회원가입을 위해, FormData를 만들어 반환하는 함수
 SignUpHTML.prototype.makeFormData = function () {
     const formData = new FormData();
     formData.append('id', document.getElementById('form-id').value);
@@ -439,10 +440,8 @@ SignUpHTML.prototype.setEventListenerToSubmit = function () {
             xhr.setRequestHeader("Content-Type", "multipart/form-data");
 
             xhr.onreadystatechange = function () {
-                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                    // go to #login
-                    location.hash = 'login';
-                }
+                // go to login page
+                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) location.hash = 'login';
             };
 
             xhr.send(this.makeFormData());
@@ -450,6 +449,7 @@ SignUpHTML.prototype.setEventListenerToSubmit = function () {
     }.bind(this));
 };
 
+// 스낵바를 보여주는 함수
 SignUpHTML.prototype.showSnackBar = function (message) {
     // Get the snackbar DIV
     const toast = document.getElementById("snackbar");
@@ -473,7 +473,6 @@ SignUpHTML.prototype.setEventListenerToReset = function () {
                 this.validation[key] = false;
         }
 
-        // document.getElementById('tagInput').value = '';
         this.inputTags.reset();
     }.bind(this));
 };
