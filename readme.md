@@ -49,6 +49,7 @@ description : 회원가입 및 로그인 개발(front-end)
 
 
 #### 9.03(화)
+1. 홈 화면 수정 (로그인과 회원가입을 한 화면에 표시)
 
 ## 개발환경
 1. jQuery, React, Vue, lodash, bootstrap, materialUI 등의 라이브러리는 사용할 수 없다.

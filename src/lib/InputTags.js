@@ -24,6 +24,7 @@ InputTags.prototype.init = function () {
     }
 
     this.input.addEventListener("focusout", function (e) {
+        // todo: 정규표현식 사용하지 말고 스플릿으로 바꿔서 한글도 되도록 하기!
         let tag_txt = e.target.value.replace(/[^a-z0-9+\-.#]/ig, ''),
             tag_exists = Boolean(this.tags_array.indexOf(tag_txt) + 1);
 
