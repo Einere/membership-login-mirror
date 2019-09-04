@@ -75,7 +75,7 @@ SignUpHTML.prototype.getHtml = function () {
                     <option value="10">11</option>
                     <option value="11">12</option>
                 </select>
-                <input type="number" id="form-day" maxlength="2" placeholder="일">
+                <input type="number" id="form-day" maxlength="2" min="1" placeholder="일">
             </div>
             <span id="form-birth-result"></span>
             <label for="form-gender">성별</label>
@@ -436,7 +436,7 @@ SignUpHTML.prototype.setEventListenerToSubmit = function () {
             this.showSnackBar(message);
         } else {
             const xhr = new XMLHttpRequest();
-            xhr.open("POST", '#submit', true);
+            xhr.open("POST", 'http://localhost:3000/users/signup', true);
             xhr.setRequestHeader("Content-Type", "multipart/form-data");
 
             xhr.onreadystatechange = function () {
