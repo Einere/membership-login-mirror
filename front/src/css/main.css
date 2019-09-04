@@ -1,0 +1,65 @@
+@import 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,700';
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+
+:root {
+    --snackbar-bottom: 50px;
+    --large-font-size: 3rem;
+    --middle-font-size: 2rem;
+    --small-font-size: 1.5rem;
+    --micro-font-size: 1.2rem;
+}
+
+/* 최상위 엘리먼트들 */
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: whitesmoke;
+    margin: 0;
+}
+
+h1 {
+    font-size: var(--large-font-size);
+    text-align: center;
+}
+
+h2 {
+    font-size: var(--middle-font-size);
+    text-align: center;
+}
+
+h3 {
+    font-size: var(--small-font-size);
+    text-align: center;
+}
+
+span {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 1rem;
+}
+
+input, select, textarea {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 1rem;
+    padding: 0 5px 0 5px;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+input[type="password"] {
+
+}
+
+/* main container */
+main.container {
+
+}
+
+
+
+
+
+
+

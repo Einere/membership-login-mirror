@@ -478,4 +478,47 @@ SignUpHTML.prototype.setEventListenerToReset = function () {
 };
 
 
+SignUpHTML.prototype.postRender = function () {
+    // form 기본 세팅
+    this.setEventListenerToForm();
+
+    // id 유효성 검사
+    this.setEventListenerToId();
+
+    // 비밀번호 유효성 검사
+    this.setEventListenerToPw();
+
+    // 비밀번호 재확인 유효성 검사
+    this.setEventListenerToPwCheck();
+
+    // 이름 유효성 검사
+    this.setEventListenerToName();
+
+    // 생년월일 유효성 검사
+    this.setEventListenerToYear();
+    this.setEventListenerToDay();
+
+    // 성별 유효성 검사
+    this.setEventListenerToGender();
+
+    // 이메일 유효성 검사
+    this.setEventListenerToEmail();
+
+    // 핸드폰 유효성 검사
+    this.setEventListenerToPhone();
+
+    // 관심사 세팅, 유효성 검사
+    this.setInputTags();
+    this.setEventListenerToInteresting();
+
+    // 모달 세팅
+    this.setEventListenerToAgree();
+
+    // 초기화 세팅
+    this.setEventListenerToReset();
+
+    // 제출 세팅
+    this.setEventListenerToSubmit();
+};
+
 export {SignUpHTML};

@@ -3,63 +3,12 @@ author : Einere
 date : 19.08.28 ~ 19.09.02  
 description : 회원가입 및 로그인 개발(front-end)
 
-## plan
-#### 8.28(수)
-1. html 작성
-    - header, nav, section, article, footer.
-2. vanilla SPA 테스트
-    - fragment(`location.hash`)와`window`, `hashchange`를 이용하여 네이티브하게 라우팅할 수 있다. 
-
-#### 8.29(목)
-1. flex box, CSS variable 공부하기
-2. 각 form요소에 material design 적용하기 (불가능.. 커스텀 css 적용하기)
-3. 중앙 정렬하기
-4. 중복되는 요소는 builder를 이용해 동적으로 관리(값과 이벤트 핸들러를 설정 가능)
-
-#### 8.30(금)
-1. 유효성 검사 로직 구현
-    1. 윤년 확인
-    2. 관심사
-2. 모달 구현하기
-3. 육진혁님 코드 기반으로 리팩토링하기 (에러 메세지 처리 로직)
-4. 스크롤 이벤트 기능 구현하기
-5. 약관 동의 체크 기능 구현하기
-6. 스낵바 기능 구현하기
-
-#### 8.31(토)
-1. section / article 공부하기 (form, modal, snackbar...)
-2. flex 속성 공부하기 및 적용하기
-3. css variable 공부하기 (스낵바 bottom...)
-4. magic number 공부하기 (무의미하게 반복되는 값들. 유지보수하기 힘들어진다)
-
-#### 9.01(일)
-1. 태그 기능 구현하기 (레퍼런스 찾아보기)
-2. select태그에 focus css가 적용 안되는 현상 수정하기
-3. 관심사 유효성 검사 기능 구현하기
-4. fixed navibation bar 구현하기
-5. 정규표현식을 객체를 이용해 리팩토링하기
-6. 로그인 페이지 구현
-
-2. 비밀번호 마스킹 문자 변경하기
-4. input태그에서 enter입력시 submit버튼이 클릭되지 않게 처리하기
-
-#### 9.02(월)
-1. form입력 데이터를 post로 데이터 보내는 것 고려하기
-2. 초기화시 데이터 초기화하기(this.validation, tagInputs 등등..)
-
-
-#### 9.03(화)
-1. 홈 화면 수정 (로그인과 회원가입을 한 화면에 표시)
-2. postRender라는 함수를 만들어, 그안에서 event listener를 등록하는 모든 메소드를 실행시키기.
-3. fetch api 공부하기
-4. css는 class를 이용해 표현하기
-
 ## 개발환경
 1. jQuery, React, Vue, lodash, bootstrap, materialUI 등의 라이브러리는 사용할 수 없다.
 2. 서버 환경은 따로 구성하지 않으며, 데이터 동기화를 하지 않는다.
 3. PC 크롬 브라우저를 기준으로 한다.
 
-## 제약조건
+## 요구사항
 ### 공통
 1. 로그인 UI에 대해서, Bootstrap등 의 라이브러리 지원을 받을 수 있다.
 2. 아이디 중복검사를 제외한 모든 부분의 유효성 검사는 FE에서 진행한다.
@@ -76,6 +25,57 @@ description : 회원가입 및 로그인 개발(front-end)
 2. CSS variables 을 사용한다.
 3. flexbox 속성을 이용하여 레이아웃을 구성한다.
 4. 
+
+## plan
+### 19.08.28(수)
+1. html 작성
+    - header, nav, section, article, footer.
+2. vanilla SPA 테스트
+    - fragment(`location.hash`)와`window`, `hashchange`를 이용하여 네이티브하게 라우팅할 수 있다. 
+
+### 19.08.29(목)
+1. flex box, CSS variable 공부하기
+2. 각 form요소에 material design 적용하기 (불가능.. 커스텀 css 적용하기)
+3. 중앙 정렬하기
+4. 중복되는 요소는 builder를 이용해 동적으로 관리(값과 이벤트 핸들러를 설정 가능)
+
+### 19.08.30(금)
+1. 유효성 검사 로직 구현
+    1. 윤년 확인
+    2. 관심사
+2. 모달 구현하기
+3. 육진혁님 코드 기반으로 리팩토링하기 (에러 메세지 처리 로직)
+4. 스크롤 이벤트 기능 구현하기
+5. 약관 동의 체크 기능 구현하기
+6. 스낵바 기능 구현하기
+
+### 19.08.31(토)
+1. section / article 공부하기 (form, modal, snackbar...)
+2. flex 속성 공부하기 및 적용하기
+3. css variable 공부하기 (스낵바 bottom...)
+4. magic number 공부하기 (무의미하게 반복되는 값들. 유지보수하기 힘들어진다)
+
+### 19.09.01(일)
+1. 태그 기능 구현하기 (레퍼런스 찾아보기)
+2. select태그에 focus css가 적용 안되는 현상 수정하기
+3. 관심사 유효성 검사 기능 구현하기
+4. fixed navibation bar 구현하기
+5. 정규표현식을 객체를 이용해 리팩토링하기
+6. 로그인 페이지 구현
+
+2. 비밀번호 마스킹 문자 변경하기
+4. input태그에서 enter입력시 submit버튼이 클릭되지 않게 처리하기
+
+### 19.09.02(월)
+1. form입력 데이터를 post로 데이터 보내는 것 고려하기 (FormData 사용)
+2. 초기화시 데이터 초기화하기(this.validation, tagInputs 등등..)
+
+### 19.09.03(화)
+1. 홈 화면 수정 (로그인과 회원가입을 한 화면에 표시)
+2. postRender라는 함수를 만들어, 그안에서 event listener를 등록하는 모든 메소드를 실행시키기.
+3. fetch api 공부하기
+4. css는 class를 이용해 표현하기
+5. json파일들 구조를 리팩토링하기
 
 ## 팁들
 - 정확히 스타일링하기 위해 reset.css를 include하고 시작할 수도 있음
@@ -187,3 +187,47 @@ description : 회원가입 및 로그인 개발(front-end)
       color: @color;
     }
     ```
+    
+# mission 1 - login BE
+    
+## 요구사항
+### 기능 요구사항
+1. 회원가입
+2. 로그인
+3. 로그인 이후 변경된 홈 화면
+4. 로그아웃
+
+### 기술 요구사항
+#### 프로그래밍
+1. js와 node.js를 사용한다.
+2. 함수에는 간단하게 주석을 단다.
+
+#### 웹 프레임워크
+1. Express를 사용
+2. cookie를 이용해 session을 구현한다.
+3. 미들웨어로 로그인 상태 확인 함수를 구현한다.
+
+#### 데이터베이스
+1. DB는 최대한 사용하지 않는 것을 추천한다.
+2. 단, 사용한다면 lowDB나 sqlite를 사용한다.
+
+#### 템플릿 엔진
+1. pug를 사용한다.
+2. API는 json으로 응답한다.
+
+#### 배포
+1. heroku를 이용하여 배포한다.
+2. readme.md에 배포 URL을 명시한다.
+
+## plan
+### 19.09.04
+1. 홈 화면 수정하기 (로그인과 회원가입을 한 화면에 표시)
+2. Express generator를 이용해 backend 디렉토리 구조 초기화하기
+3. 라우팅 기능 구현하기 (API서버처럼 request에 따라 적절한 로직 처리 후 json으로 응답)
+4. lowDB 기능 구현하기 
+5. 회원가입 기능 구현하기
+6. 로그인 기능 구현하기
+7. 로그인 이후 변경된 홈 화면 구현하기
+8. 쿠키를 이용한 세션 구현하기 
+9. 로그아웃 기능 구현하기
+

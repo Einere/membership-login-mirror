@@ -3,12 +3,11 @@ section.login {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 30%;
+    width: 50%;
     margin: 0 auto;
 }
 
-section.login input,
-section.login button {
+section.login input {
     height: var(--middle-font-size);
     width: 50%;
     margin-bottom: 1rem;
@@ -21,9 +20,17 @@ section.login input:focus {
 
 }
 
-section.login button {
-    height: var(--large-font-size);
+section.login .login-button-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: space-between;
     width: 50%;
+}
+
+section.login .login-button-bar button {
+    height: var(--large-font-size);
+    width: 48%;
     color: white;
     background-color: forestgreen;
     border-style: none;
@@ -31,7 +38,7 @@ section.login button {
     font-size: var(--micro-font-size);
 }
 
-section.login button:hover {
+section.login .login-button-bar button:hover {
     background-color: darkgreen;
     cursor: pointer;
 }
