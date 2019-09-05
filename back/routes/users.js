@@ -36,7 +36,7 @@ router.get('/checkId/:id', function (req, res) {
     });
 });
 
-router.post('/signup', function (req, res) {
+router.post('/signUp', function (req, res) {
     const duplicated = isDuplicatedId(req.body.id);
 
     if (!duplicated) {

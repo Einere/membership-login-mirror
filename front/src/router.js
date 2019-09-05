@@ -14,7 +14,7 @@ function router(hashValue) {
             setContent(homeHTML());
             break;
         }
-        case 'signup': {
+        case 'signUp': {
             const signUpHTML = new SignUpHTML();
             setContent(signUpHTML.getHtml());
             signUpHTML.postRender();

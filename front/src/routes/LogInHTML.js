@@ -7,7 +7,7 @@ LogInHTML.prototype.getHtml = function () {
         <input type="text" placeholder="아이디"/>
         <input type="password" placeholder="비밀번호"/>
         <div class="login-button-bar">
-            <button id="signup">회원가입</button>
+            <button id="signUp">회원가입</button>
             <button id="login">로그인</button>
         </div>
     </section>
@@ -15,8 +15,8 @@ LogInHTML.prototype.getHtml = function () {
 };
 
 LogInHTML.prototype.setEventListenerToSignUp = function () {
-    document.getElementById('signup').addEventListener('click', function () {
-        location.hash = 'signup';
+    document.getElementById('signUp').addEventListener('click', function () {
+        location.hash = 'signUp';
     });
 };
 

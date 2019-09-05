@@ -455,7 +455,7 @@ SignUpHTML.prototype.setEventListenerToSubmit = function () {
         if (!result) {
             this.showSnackBar(message);
         } else {
-            this.requestFormData('POST', 'http://localhost:3000/users/signup');
+            this.requestFormData('POST', 'http://localhost:3000/users/signUp');
         }
     }.bind(this));
 };
