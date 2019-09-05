@@ -1,5 +1,6 @@
 import {InputTags} from "../lib/InputTags.js";
 import {makeInputNode} from "../lib/makeInputNode.js";
+import {readTextFile} from "../lib/readTextFile.js";
 
 function SignUpHTML() {
     this.days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -25,22 +26,9 @@ function SignUpHTML() {
     };
     this.inputTags = undefined;
 
-    readTextFile('./src/data/error.json', function (text) {
+    readTextFile('./src/data/signUpError.json', function (text) {
         this.error = JSON.parse(text);
     }.bind(this));
-}
-
-// 로컬에서 파일을 읽는 함수
-function readTextFile(file, callback) {
-    const rawFile = new XMLHttpRequest();
-    rawFile.overrideMimeType("application/json");
-    rawFile.open("GET", file, true);
-    rawFile.onreadystatechange = function () {
-        if (rawFile.readyState === 4 && rawFile.status === 200) {
-            callback(rawFile.responseText);
-        }
-    };
-    rawFile.send(null);
 }
 
 // 회원가입 html을 반환하는 함수
@@ -422,7 +410,7 @@ SignUpHTML.prototype.setEventListenerToAgree = function () {
 };
 
 // 회원가입을 위해, FormData를 만들어 반환하는 함수
-SignUpHTML.prototype.makeFormData = function () {
+SignUpHTML.prototype.makeSignUpFormData = function () {
     const formData = new FormData();
     formData.append('id', document.getElementById('form-id').value);
     formData.append('pw', document.getElementById('form-pw-check').value);
@@ -463,14 +451,13 @@ SignUpHTML.prototype.setEventListenerToSubmit = function () {
 SignUpHTML.prototype.requestFormData = function (method, url) {
     const xhr = new XMLHttpRequest();
     xhr.open(method, url, true);
-    // xhr.setRequestHeader("Content-Type", "multipart/form-data");
 
     xhr.onreadystatechange = function () {
         // go to login page
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) location.hash = 'login';
     };
 
-    xhr.send(this.makeFormData());
+    xhr.send(this.makeSignUpFormData());
 };
 
 // 스낵바를 보여주는 함수
