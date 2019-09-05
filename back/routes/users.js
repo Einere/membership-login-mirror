@@ -37,9 +37,9 @@ router.get('/checkId/:id', function (req, res) {
 });
 
 router.post('/signUp', function (req, res) {
-    const duplicated = isDuplicatedId(req.body.id);
+    const isDuplicated = isDuplicatedId(req.body.id);
 
-    if (!duplicated) {
+    if (!isDuplicated) {
         db.get('users')
             .push(Object.keys(req.body).reduce((acc, key) => {
                 acc[key] = req.body[key];
@@ -49,7 +49,7 @@ router.post('/signUp', function (req, res) {
     }
 
     setHeaderForCORS(res).json({
-        result: !duplicated,
+        result: !isDuplicated,
     });
 });
 

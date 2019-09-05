@@ -463,7 +463,7 @@ SignUpHTML.prototype.setEventListenerToSubmit = function () {
 SignUpHTML.prototype.requestFormData = function (method, url) {
     const xhr = new XMLHttpRequest();
     xhr.open(method, url, true);
-    xhr.setRequestHeader("Content-Type", "multipart/form-data");
+    // xhr.setRequestHeader("Content-Type", "multipart/form-data");
 
     xhr.onreadystatechange = function () {
         // go to login page
