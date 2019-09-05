@@ -59,6 +59,14 @@ LogInHTML.prototype.requestLogIn = function (method, url) {
     });
 };
 
+LogInHTML.prototype.setEventListenerToPw = function () {
+    document.getElementById('login-pw').addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+            document.getElementById('login').click();
+        }
+    });
+};
+
 LogInHTML.prototype.setEventListenerToLogIn = function () {
     document.getElementById('login').addEventListener('click', function () {
         this.requestLogIn('POST', 'http://localhost:3000/users/login')
@@ -72,6 +80,7 @@ LogInHTML.prototype.setEventListenerToLogIn = function () {
 };
 
 LogInHTML.prototype.postRender = function () {
+    this.setEventListenerToPw()
     this.setEventListenerToSignUp();
     this.setEventListenerToLogIn();
 };
