@@ -49,7 +49,7 @@ LogInHTML.prototype.requestLogIn = function (method, url) {
         xhr.onreadystatechange = function () {
             // go to login page
             if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                const {result, name} = JSON.parse(xhr.response);
+                const {result, name, cookie} = JSON.parse(xhr.response);
 
                 result ? res() : rej();
             }
@@ -80,7 +80,7 @@ LogInHTML.prototype.setEventListenerToLogIn = function () {
 };
 
 LogInHTML.prototype.postRender = function () {
-    this.setEventListenerToPw()
+    this.setEventListenerToPw();
     this.setEventListenerToSignUp();
     this.setEventListenerToLogIn();
 };
