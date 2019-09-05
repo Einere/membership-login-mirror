@@ -7,6 +7,11 @@ section.login {
     margin: 0 auto;
 }
 
+section.login span {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
 section.login input {
     height: var(--middle-font-size);
     width: 50%;

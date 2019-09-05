@@ -1,6 +1,6 @@
 function homeHTML() {
     return `
-    <section class="login">
+    <section class="home">
         <h1>welcome!</h1>
     </section>
     `;
