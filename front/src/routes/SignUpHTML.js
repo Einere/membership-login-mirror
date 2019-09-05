@@ -237,12 +237,20 @@ SignUpHTML.prototype.setEventListenerToName = function () {
     }.bind(this));
 };
 
-SignUpHTML.prototype.setEventListenerToYear = function () {
-    document.getElementById('form-year').addEventListener('blur', function (e) {
-        const formBirthResult = document.querySelector('#form-birth-result');
-        const birthYear = parseInt(e.target.value, 10);
 
+// 윤년인지 검사하는 함수
+function isLeapYear(year) {
+    return (year % 4 === 0) && (year % 100 !== 0) || (year % 400 === 0);
+}
+
+SignUpHTML.prototype.setEventListenerToBirth = function () {
+    function checkBirth() {
         // 유효한 년을 입력했는지 검사한다
+        const formBirthResult = document.querySelector('#form-birth-result');
+        const birthYear = parseInt(document.getElementById('form-year').value, 10);
+        const birthMonth = parseInt(document.getElementById('form-month').value, 10);
+        const birthDay = parseInt(document.getElementById('form-day').value, 10);
+
         if (isNaN(birthYear)) {
             this.setResult(formBirthResult, 'year', 1);
             return;
@@ -255,19 +263,6 @@ SignUpHTML.prototype.setEventListenerToYear = function () {
         } else {
             this.setResult(formBirthResult, 'year', 0);
         }
-    }.bind(this));
-};
-
-// 윤년인지 검사하는 함수
-function isLeapYear(year) {
-    return (year % 4 === 0) && (year % 100 !== 0) || (year % 400 === 0);
-}
-
-SignUpHTML.prototype.setEventListenerToDay = function () {
-    document.getElementById('form-day').addEventListener('blur', function (e) {
-        const formBirthResult = document.querySelector('#form-birth-result');
-        const birthMonth = parseInt(document.querySelector('#form-month').value, 10);
-        const birthDay = parseInt(e.target.value);
 
         // 월을 선택하지 않으면 에러 메세지를 표시한다
         if (isNaN(birthMonth)) {
@@ -285,9 +280,12 @@ SignUpHTML.prototype.setEventListenerToDay = function () {
             this.setResult(formBirthResult, 'month', 0);
             this.setResult(formBirthResult, 'day', 0);
         }
-    }.bind(this));
-};
+    }
 
+    document.getElementById('form-year').addEventListener('blur', checkBirth.bind(this));
+    document.getElementById('form-month').addEventListener('blur', checkBirth.bind(this));
+    document.getElementById('form-day').addEventListener('blur', checkBirth.bind(this));
+};
 
 SignUpHTML.prototype.setEventListenerToGender = function () {
     document.getElementById('form-gender').addEventListener('blur', function (e) {
@@ -495,8 +493,9 @@ SignUpHTML.prototype.postRender = function () {
     this.setEventListenerToName();
 
     // 생년월일 유효성 검사
-    this.setEventListenerToYear();
-    this.setEventListenerToDay();
+    this.setEventListenerToBirth();
+    // this.setEventListenerToYear();
+    // this.setEventListenerToDay();
 
     // 성별 유효성 검사
     this.setEventListenerToGender();
