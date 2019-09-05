@@ -185,12 +185,33 @@ SignUpHTML.prototype.setEventListenerToId = function () {
 
         // 아이디가 유효한지 검사한다
         if (this.regExp.id.test(e.target.value)) {
-            this.setResult(formIdResult, 'id', 0);
+            requestCheckingDuplicatedId('GET', `http://127.0.0.1:3000/users/checkId/${e.target.value}`)
+                .then(() => {
+                    this.setResult(formIdResult, 'id', 0);
+                })
+                .catch(() => {
+                    this.setResult(formIdResult, 'id', 2);
+                })
         } else {
             this.setResult(formIdResult, 'id', 1);
         }
     }.bind(this));
 };
+
+function requestCheckingDuplicatedId(method, url) {
+    return new Promise((res, rej) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open(method, url, true);
+
+        xhr.onreadystatechange = function () {
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                xhr.response.result ? res(xhr.response.result) : rej(xhr.response.result);
+            }
+        };
+
+        xhr.send();
+    });
+}
 
 
 SignUpHTML.prototype.setEventListenerToPw = function () {
@@ -433,18 +454,22 @@ SignUpHTML.prototype.setEventListenerToSubmit = function () {
         if (!result) {
             this.showSnackBar(message);
         } else {
-            const xhr = new XMLHttpRequest();
-            xhr.open("POST", 'http://localhost:3000/users/signup', true);
-            xhr.setRequestHeader("Content-Type", "multipart/form-data");
-
-            xhr.onreadystatechange = function () {
-                // go to login page
-                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) location.hash = 'login';
-            };
-
-            xhr.send(this.makeFormData());
+            this.requestFormData('POST', 'http://localhost:3000/users/signup');
         }
     }.bind(this));
+};
+
+SignUpHTML.prototype.requestFormData = function (method, url) {
+    const xhr = new XMLHttpRequest();
+    xhr.open(method, url, true);
+    xhr.setRequestHeader("Content-Type", "multipart/form-data");
+
+    xhr.onreadystatechange = function () {
+        // go to login page
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) location.hash = 'login';
+    };
+
+    xhr.send(this.makeFormData());
 };
 
 // 스낵바를 보여주는 함수

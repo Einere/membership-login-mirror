@@ -1,5 +1,4 @@
 function LogInHTML() {
-
 }
 
 LogInHTML.prototype.getHtml = function () {
