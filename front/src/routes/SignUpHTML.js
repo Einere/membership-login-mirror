@@ -205,7 +205,8 @@ function requestCheckingDuplicatedId(method, url) {
 
         xhr.onreadystatechange = function () {
             if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                xhr.response.result ? res(xhr.response.result) : rej(xhr.response.result);
+                const {result} = JSON.parse(xhr.response);
+                result ? res() : rej();
             }
         };
 
