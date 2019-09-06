@@ -1,6 +1,7 @@
 import {HomeHTML} from "./routes/HomeHTML.js";
 import {SignUpHTML} from './routes/SignUpHTML.js';
 import {LogInHTML} from './routes/LogInHTML.js';
+import {BoardHTML} from "./routes/BoardHTML.js";
 
 function setContent(htmlStr) {
     const container = document.querySelector('.container');
@@ -26,10 +27,16 @@ function router(hashValue) {
             setContent(`<h1>you submitted form</h1>`);
             break;
         }
-        case `login`: {
+        case 'login': {
             const loginHTML = new LogInHTML();
             setContent(loginHTML.getHtml());
             loginHTML.postRender();
+            break;
+        }
+        case 'board': {
+            const boardHTML = new BoardHTML();
+            setContent(boardHTML.getHTML());
+            boardHTML.postRender();
             break;
         }
         default: {
