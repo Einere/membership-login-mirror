@@ -16,8 +16,8 @@ function setHeader(res, options) {
         });
     }
     if (options.cookie) {
-        res.cookie('session-id', `${options.cookie.sessionId}`);
-        res.cookie('session-name', `${options.cookie.sessionName}`);
+        res.cookie('sessionId', `${options.cookie.sessionId}`);
+        res.cookie('sessionName', `${options.cookie.sessionName}`);
     }
 
     return res;
@@ -26,6 +26,12 @@ function setHeader(res, options) {
 function isDuplicatedId(id) {
     return db.get('users')
         .find({id: id})
+        .value();
+}
+
+function isLoggedIn(sessionId) {
+    return db.get('sessions')
+        .find({sessionId})
         .value();
 }
 
@@ -46,6 +52,12 @@ router.get('/checkId/:id', function (req, res) {
     }).json({
         result: !isDuplicatedId(req.params.id)
     });
+});
+
+router.get('/isLoggedIn', function (req, res) {
+    setHeader(res, {
+        cors: {}
+    }).send(!!isLoggedIn(req.cookies.sessionId));
 });
 
 router.post('/signUp', function (req, res) {
@@ -83,35 +95,32 @@ router.post('/login', function (req, res) {
             })
             .value();
 
-        let session = undefined;
+        let sessionId = undefined;
         if (!sessionResult) {
             // 세션 생성, 저장
-            session = uuid();
+            sessionId = uuid();
             db.get('sessions')
                 .push({
                     id: req.body.id,
-                    session
+                    sessionId
                 })
                 .write();
         } else {
-            session = sessionResult.session;
+            sessionId = sessionResult.sessionId;
         }
 
         // 쿠키를 이용해 세션 설정
         setHeader(res, {
             cors: {},
             cookie: {
-                sessionId: session,
+                sessionId,
                 sessionName: userResult.name
             }
-        }).send('cookie is set!');
+        }).send(true);
     } else {
         setHeader(res, {
             cors: {},
-        }).json({
-            result: !!userResult,
-            name: userResult ? userResult.name : undefined
-        });
+        }).send(false);
     }
 });
 
