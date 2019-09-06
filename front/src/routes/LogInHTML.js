@@ -1,6 +1,10 @@
 import {readTextFile} from "../lib/readTextFile.js";
 
 function LogInHTML() {
+    this.validation = {
+        id: false,
+        pw: false
+    };
     readTextFile('./src/data/logInError.json', function (text) {
         this.error = JSON.parse(text);
     }.bind(this));
@@ -27,6 +31,26 @@ LogInHTML.prototype.setResult = function (target, key, index) {
     target.style.color = error.success ? "green" : "red";
 };
 
+LogInHTML.prototype.setEventListenerToId = function () {
+    document.getElementById('login-id').addEventListener('blur', function (e) {
+        this.validation.id = !!e.target.value;
+    }.bind(this));
+};
+
+LogInHTML.prototype.setEventListenerToPw = function () {
+    const loginPw = document.getElementById('login-pw');
+
+    loginPw.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+            e.target.dispatchEvent(new Event('blur'));
+            document.getElementById('login').click();
+        }
+    });
+    loginPw.addEventListener('blur', function (e) {
+        this.validation.pw = !!e.target.value;
+    }.bind(this));
+};
+
 LogInHTML.prototype.setEventListenerToSignUp = function () {
     document.getElementById('signUp').addEventListener('click', function () {
         location.hash = 'signUp';
@@ -50,7 +74,7 @@ LogInHTML.prototype.requestLogIn = function (method, url) {
         xhr.onreadystatechange = function () {
             // go to login page
             if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                xhr.response ? res() : rej();
+                xhr.response === "true" ? res() : rej();
             }
         };
 
@@ -58,27 +82,23 @@ LogInHTML.prototype.requestLogIn = function (method, url) {
     });
 };
 
-LogInHTML.prototype.setEventListenerToPw = function () {
-    document.getElementById('login-pw').addEventListener('keydown', function (e) {
-        if (e.key === 'Enter') {
-            document.getElementById('login').click();
-        }
-    });
-};
 
 LogInHTML.prototype.setEventListenerToLogIn = function () {
     document.getElementById('login').addEventListener('click', function () {
-        this.requestLogIn('POST', 'http://localhost:3000/users/login')
-            .then(() => {
-                location.hash = '';
-            })
-            .catch(() => {
-                this.setResult(document.getElementById('login-result'), 'login', 1);
-            });
+        if (this.validation.id && this.validation.pw) {
+            this.requestLogIn('POST', 'http://localhost:3000/users/login')
+                .then(() => {
+                    location.hash = '';
+                })
+                .catch(() => {
+                    this.setResult(document.getElementById('login-result'), 'login', 1);
+                });
+        }
     }.bind(this));
 };
 
 LogInHTML.prototype.postRender = function () {
+    this.setEventListenerToId();
     this.setEventListenerToPw();
     this.setEventListenerToSignUp();
     this.setEventListenerToLogIn();
