@@ -1,4 +1,4 @@
-import {homeHTML} from "./routes/HomeHTML.js";
+import {HomeHTML} from "./routes/HomeHTML.js";
 import {SignUpHTML} from './routes/SignUpHTML.js';
 import {LogInHTML} from './routes/LogInHTML.js';
 
@@ -11,7 +11,9 @@ function setContent(htmlStr) {
 function router(hashValue) {
     switch (hashValue) {
         case '': {
-            setContent(homeHTML());
+            const homeHTML = new HomeHTML();
+            setContent(homeHTML.getHtml());
+            homeHTML.postRender();
             break;
         }
         case 'signUp': {

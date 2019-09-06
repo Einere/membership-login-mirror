@@ -11,11 +11,13 @@ function setHeader(res, options) {
     if (options.cors) {
         res.set({
             'Access-Control-Allow-Origin': options.cors.url ? options.cors.url : 'http://localhost:63342',
-            'Access-Control-Allow-Methods': options.cors.method ? options.cors.method : 'GET, POST, PATCH, DELETE'
+            'Access-Control-Allow-Methods': options.cors.method ? options.cors.method : 'GET, POST, PATCH, DELETE',
+            'Access-Control-Allow-Credentials': true,
         });
     }
     if (options.cookie) {
         res.cookie('session-id', `${options.cookie.sessionId}`);
+        res.cookie('session-name', `${options.cookie.sessionName}`);
     }
 
     return res;
@@ -99,12 +101,10 @@ router.post('/login', function (req, res) {
         setHeader(res, {
             cors: {},
             cookie: {
-                sessionId: session
+                sessionId: session,
+                sessionName: userResult.name
             }
-        }).json({
-            result: !!userResult,
-            name: userResult ? userResult.name : undefined
-        });
+        }).send('cookie is set!');
     } else {
         setHeader(res, {
             cors: {},

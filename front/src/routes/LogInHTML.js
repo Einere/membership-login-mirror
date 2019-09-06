@@ -45,13 +45,12 @@ LogInHTML.prototype.requestLogIn = function (method, url) {
     return new Promise((res, rej) => {
         const xhr = new XMLHttpRequest();
         xhr.open(method, url, true);
+        xhr.withCredentials = true;
 
         xhr.onreadystatechange = function () {
             // go to login page
             if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                const {result, name, cookie} = JSON.parse(xhr.response);
-
-                result ? res() : rej();
+                xhr.response ? res() : rej();
             }
         };
 

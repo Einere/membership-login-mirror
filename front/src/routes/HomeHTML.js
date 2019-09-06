@@ -1,9 +1,24 @@
-function homeHTML() {
-    return `
-    <section class="home">
-        <h1>welcome!</h1>
-    </section>
-    `;
+import {parseCookie} from "../lib/parseCookie.js";
+
+function HomeHTML() {
+
 }
 
-export {homeHTML};
+HomeHTML.prototype.getHtml = function () {
+    return `
+    <section class="home">
+        <h2 id="welcome-msg">welcome!</h2>
+    </section>
+    `;
+};
+
+HomeHTML.prototype.setWelcomeMessage = function () {
+    const cookieObj = parseCookie(document.cookie);
+    document.getElementById('welcome-msg').innerText += ` ${cookieObj['session-name']}!`;
+};
+
+HomeHTML.prototype.postRender = function () {
+    this.setWelcomeMessage();
+};
+
+export {HomeHTML};
