@@ -60,6 +60,21 @@ router.get('/isLoggedIn', function (req, res) {
     }).send(!!isLoggedIn(req.cookies.sessionId));
 });
 
+router.get('/logout', function (req, res) {
+    const sessionId = req.cookies.sessionId;
+
+    db.get('sessions')
+        .remove({sessionId})
+        .write();
+
+    const myRes = setHeader(res, {
+        cors: {}
+    });
+    myRes.clearCookie('sessionId');
+    myRes.clearCookie('sessionName');
+    myRes.send(true);
+});
+
 router.post('/signUp', function (req, res) {
     const isDuplicated = isDuplicatedId(req.body.id);
 

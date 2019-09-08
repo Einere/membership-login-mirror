@@ -26,7 +26,7 @@ LogInHTML.prototype.getHtml = function () {
 
 LogInHTML.prototype.setResult = function (target, key, index) {
     const error = this.error[key][index];
-    console.log(target, error);
+
     target.textContent = error.message;
     target.style.color = error.success ? "green" : "red";
 };
