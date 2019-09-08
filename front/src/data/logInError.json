@@ -1,4 +1,24 @@
 {
+  "id": [
+    {
+      "success": true,
+      "message": ""
+    },
+    {
+      "success": false,
+      "message": "아이디를 입력해주세요."
+    }
+  ],
+  "pw": [
+    {
+      "success": true,
+      "message": ""
+    },
+    {
+      "success": false,
+      "message": "비밀번호를 입력해주세요."
+    }
+  ],
   "login": [
     {
       "success": true,

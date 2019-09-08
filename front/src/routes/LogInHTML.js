@@ -26,7 +26,7 @@ LogInHTML.prototype.getHtml = function () {
 
 LogInHTML.prototype.setResult = function (target, key, index) {
     const error = this.error[key][index];
-
+    console.log(target, error);
     target.textContent = error.message;
     target.style.color = error.success ? "green" : "red";
 };
@@ -34,6 +34,8 @@ LogInHTML.prototype.setResult = function (target, key, index) {
 LogInHTML.prototype.setEventListenerToId = function () {
     document.getElementById('login-id').addEventListener('blur', function (e) {
         this.validation.id = !!e.target.value;
+        if (!e.target.value) this.setResult(document.getElementById('login-result'), 'id', 1);
+        else this.setResult(document.getElementById('login-result'), 'id', 0);
     }.bind(this));
 };
 
@@ -48,6 +50,8 @@ LogInHTML.prototype.setEventListenerToPw = function () {
     });
     loginPw.addEventListener('blur', function (e) {
         this.validation.pw = !!e.target.value;
+        if (!e.target.value) this.setResult(document.getElementById('login-result'), 'pw', 1);
+        else this.setResult(document.getElementById('login-result'), 'pw', 0);
     }.bind(this));
 };
 
@@ -65,14 +69,13 @@ LogInHTML.prototype.makeLogInFormData = function () {
     return formData;
 };
 
-LogInHTML.prototype.requestLogIn = function (method, url) {
+LogInHTML.prototype.requestLogIn = function () {
     return new Promise((res, rej) => {
         const xhr = new XMLHttpRequest();
-        xhr.open(method, url, true);
+        xhr.open('POST', 'http://localhost:3000/users/login', true);
         xhr.withCredentials = true;
 
         xhr.onreadystatechange = function () {
-            // go to login page
             if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
                 xhr.response === "true" ? res() : rej();
             }
@@ -86,7 +89,7 @@ LogInHTML.prototype.requestLogIn = function (method, url) {
 LogInHTML.prototype.setEventListenerToLogIn = function () {
     document.getElementById('login').addEventListener('click', function () {
         if (this.validation.id && this.validation.pw) {
-            this.requestLogIn('POST', 'http://localhost:3000/users/login')
+            this.requestLogIn()
                 .then(() => {
                     location.hash = '';
                 })
