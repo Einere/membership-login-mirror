@@ -270,6 +270,7 @@ SignUpHTML.prototype.setEventListenerToBirth = function () {
         // 특정 범위 내의 나이인지 검사한다
         if (age < 15 || age > 99) {
             this.setResult(formBirthResult, 'year', 2);
+            return;
         } else {
             this.setResult(formBirthResult, 'year', 0);
         }
