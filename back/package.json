@@ -18,6 +18,7 @@
     "uuid": "^3.3.3"
   },
   "devDependencies": {
+    "express-session": "^1.16.2",
     "nodemon": "^1.19.2"
   }
 }

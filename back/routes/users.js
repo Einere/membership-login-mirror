@@ -15,10 +15,6 @@ function setHeader(res, options) {
             'Access-Control-Allow-Credentials': true,
         });
     }
-    if (options.cookie) {
-        res.cookie('sessionId', `${options.cookie.sessionId}`);
-        res.cookie('sessionName', `${options.cookie.sessionName}`);
-    }
 
     return res;
 }
@@ -36,10 +32,8 @@ function isLoggedIn(sessionId) {
 }
 
 // set default db
-db.defaults({users: []})
-    .write();
-db.defaults({sessions: {}})
-    .write();
+db.defaults({users: []}).write();
+db.defaults({sessions: {}}).write();
 
 
 /* GET users listing. */
@@ -48,7 +42,9 @@ router.get('/', function (req, res, next) {
 
 router.get('/checkId/:id', function (req, res) {
     setHeader(res, {
-        cors: {}
+        cors: {
+            url: 'http://membership-test.s3-website.ap-northeast-2.amazonaws.com'
+        }
     }).json({
         result: !isDuplicatedId(req.params.id)
     });
@@ -56,23 +52,24 @@ router.get('/checkId/:id', function (req, res) {
 
 router.get('/isLoggedIn', function (req, res) {
     setHeader(res, {
-        cors: {}
-    }).send(!!isLoggedIn(req.cookies.sessionId));
+        cors: {
+            url: 'http://membership-test.s3-website.ap-northeast-2.amazonaws.com'
+        }
+    }).send(!!isLoggedIn(req.session.sessionId));
 });
 
 router.get('/logout', function (req, res) {
-    const sessionId = req.cookies.sessionId;
-
     db.get('sessions')
-        .remove({sessionId})
+        .remove({sessionId: req.session.sessionId})
         .write();
 
-    const myRes = setHeader(res, {
-        cors: {}
-    });
-    myRes.clearCookie('sessionId');
-    myRes.clearCookie('sessionName');
-    myRes.send(true);
+    req.session.destroy();
+    res.clearCookie('sessionName');
+    setHeader(res, {
+        cors: {
+            url: 'http://membership-test.s3-website.ap-northeast-2.amazonaws.com'
+        }
+    }).send(true);
 });
 
 router.post('/signUp', function (req, res) {
@@ -88,7 +85,9 @@ router.post('/signUp', function (req, res) {
     }
 
     setHeader(res, {
-        cors: {}
+        cors: {
+            url: 'http://membership-test.s3-website.ap-northeast-2.amazonaws.com'
+        }
     }).json({
         result: !isDuplicated,
     });
@@ -124,24 +123,28 @@ router.post('/login', function (req, res) {
             sessionId = sessionResult.sessionId;
         }
 
-        // 쿠키를 이용해 세션 설정
+        // express-session을 이용해 세션 설정
+        req.session.sessionId = sessionId;
+        res.cookie('sessionName', userResult.name);
         setHeader(res, {
-            cors: {},
-            cookie: {
-                sessionId,
-                sessionName: userResult.name
+            cors: {
+                url: 'http://membership-test.s3-website.ap-northeast-2.amazonaws.com'
             }
         }).send(true);
     } else {
         setHeader(res, {
-            cors: {},
+            cors: {
+                url: 'http://membership-test.s3-website.ap-northeast-2.amazonaws.com'
+            },
         }).send(false);
     }
 });
 
 router.patch('/:id', function (req, res) {
     setHeader(res, {
-        cors: {}
+        cors: {
+            url: 'http://membership-test.s3-website.ap-northeast-2.amazonaws.com'
+        }
     }).json({
         result: true,
         message: `${req.params.id} : updated`
@@ -150,7 +153,9 @@ router.patch('/:id', function (req, res) {
 
 router.delete('/:id', function (req, res) {
     setHeader(res, {
-        cors: {}
+        cors: {
+            url: 'http://membership-test.s3-website.ap-northeast-2.amazonaws.com'
+        }
     }).json({
         result: true,
         message: `${req.params.id} : deleted`

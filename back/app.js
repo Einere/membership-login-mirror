@@ -4,7 +4,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const upload = require('multer')();
-
+const session = require('express-session');
+const uuid = require('uuid/v4');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -20,6 +21,14 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(upload.array());
 app.use(cookieParser());
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    /*genid(req) {
+        return uuid();
+    }*/
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
