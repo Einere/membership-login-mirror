@@ -4,12 +4,12 @@ import {LogInHTML} from './routes/LogInHTML.js';
 import {BoardHTML} from "./routes/BoardHTML.js";
 // webstorm을 이용해서 run하는 경우, 주석처리할 것.
 // webpack을 이용해서 build하는 경우, 주석해제 할 것.
-require('./css/inputTags.css');
+/*require('./css/inputTags.css');
 require('./css/logIn.css');
 require('./css/main.css');
 require('./css/modal.css');
 require('./css/signUp.css');
-require('./css/snackbar.css');
+require('./css/snackbar.css');*/
 
 function setContent(htmlStr) {
     const container = document.querySelector('.container');

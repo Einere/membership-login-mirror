@@ -10,7 +10,14 @@
 }
 
 /* 최상위 엘리먼트들 */
+html {
+    height: 100%;
+}
+
 body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     font-family: 'Noto Sans KR', sans-serif;
     background-color: whitesmoke;
     margin: 0;
@@ -48,13 +55,23 @@ input, select, textarea {
     -webkit-box-sizing: border-box;
 }
 
-input[type="password"] {
-
-}
-
 /* main container */
 main.container {
+    flex: 1 0 auto;
+    width: 100%;
+    margin-bottom: var(--large-font-size);
+}
 
+/* footer */
+
+footer {
+    /*position: fixed;
+    left: 0;
+    bottom: 0;*/
+    width: 100%;
+    background-color: dimgray;
+    color: white;
+    text-align: center;
 }
 
 
