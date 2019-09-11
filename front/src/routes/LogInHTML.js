@@ -13,6 +13,7 @@ function LogInHTML() {
 LogInHTML.prototype.getHtml = function () {
     return `
     <section class="login">
+        <h1>로그인</h1>
         <input id="login-id" type="text" placeholder="아이디"/>
         <input id="login-pw" type="password" placeholder="비밀번호"/>
         <span id="login-result"></span>
