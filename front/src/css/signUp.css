@@ -2,8 +2,21 @@
 .form-container {
     display: flex;
     flex-direction: column;
-    width: 30%;
+    align-items: center;
+    width: 50%;
     margin: 0 auto;
+}
+
+@media (min-width: 425px) {
+    .form-container {
+        width: 100%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .form-container {
+        width: 50%;
+    }
 }
 
 .form-container .form-title {
@@ -13,6 +26,7 @@
 .form-container .form {
     display: flex;
     flex-direction: column;
+    width: 50%;
 }
 
 .form-container label {

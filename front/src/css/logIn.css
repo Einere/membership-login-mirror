@@ -7,6 +7,19 @@ section.login {
     margin: 0 auto;
 }
 
+@media (min-width: 425px) {
+    section.login {
+        width: 100%;
+    }
+}
+
+@media (min-width: 1200px) {
+    section.login {
+        width: 50%;
+    }
+}
+
+
 section.login span {
     text-align: center;
     margin-bottom: 1rem;

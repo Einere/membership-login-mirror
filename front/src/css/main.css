@@ -21,6 +21,7 @@ body {
     font-family: 'Noto Sans KR', sans-serif;
     background-color: whitesmoke;
     margin: 0;
+    overflow: overlay;
 }
 
 h1 {
@@ -61,30 +62,45 @@ nav.header {
     justify-content: space-between;
     align-items: center;
     height: var(--large-font-size);
+    min-height: var(--large-font-size);
     padding: 0 1rem;
     color: white;
     background-color: forestgreen;
     margin-bottom: 1rem;
 }
 
-nav.header .nav-bar-menu-container {
-    display: flex;
-    flex-direction: row;
+nav.header .nav-bar-home-container {
+
 }
 
-nav.header .nav-bar-menu-container span {
+nav.header .nav-bar-link-container {
+    display: flex;
+}
+
+nav.header a {
     width: max-content;
+    color: white;
+    text-decoration: none;
+    margin: 0 0.5rem;
+}
+
+nav.header a:hover {
+    color: dimgray;
 }
 
 /* main container */
 main.container {
-    flex: 1 0 auto;
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: auto;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
     width: 100%;
-    margin-bottom: var(--large-font-size);
 }
 
 /* footer */
-
 footer {
     /*position: fixed;
     left: 0;
