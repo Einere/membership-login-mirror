@@ -24,12 +24,22 @@ app.use(cookieParser());
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
-    saveUninitialized: true,
-    /*genid(req) {
-        return uuid();
-    }*/
+    saveUninitialized: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+process.env.ORIGIN = 'http://localhost:63342';
+// process.env.ORIGIN = 'http://membership-test.s3-website.ap-northeast-2.amazonaws.com';
+
+// CORS handling
+app.use('/*', function (req, res, next) {
+    res.set({
+        'Access-Control-Allow-Origin': process.env.ORIGIN,
+        'Access-Control-Allow-Methods': 'GET, POST, PATCH, DELETE',
+        'Access-Control-Allow-Credentials': true,
+    });
+    next();
+});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
