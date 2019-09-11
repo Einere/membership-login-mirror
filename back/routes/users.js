@@ -6,19 +6,6 @@ const adapter = new FileSync('db.json');
 const db = low(adapter);
 const uuid = require('uuid/v4');
 
-// prevent CORS error
-function setHeader(res, options) {
-    if (options.cors) {
-        res.set({
-            'Access-Control-Allow-Origin': options.cors.url ? options.cors.url : 'http://localhost:63342',
-            'Access-Control-Allow-Methods': options.cors.method ? options.cors.method : 'GET, POST, PATCH, DELETE',
-            'Access-Control-Allow-Credentials': true,
-        });
-    }
-
-    return res;
-}
-
 function isDuplicatedId(id) {
     return db.get('users')
         .find({id: id})
@@ -41,21 +28,13 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/checkId/:id', function (req, res) {
-    setHeader(res, {
-        cors: {
-            url: 'http://membership-test.s3-website.ap-northeast-2.amazonaws.com'
-        }
-    }).json({
+    res.json({
         result: !isDuplicatedId(req.params.id)
     });
 });
 
 router.get('/isLoggedIn', function (req, res) {
-    setHeader(res, {
-        cors: {
-            url: 'http://membership-test.s3-website.ap-northeast-2.amazonaws.com'
-        }
-    }).send(!!isLoggedIn(req.session.sessionId));
+    res.send(!!isLoggedIn(req.session.sessionId));
 });
 
 router.get('/logout', function (req, res) {
@@ -63,13 +42,9 @@ router.get('/logout', function (req, res) {
         .remove({sessionId: req.session.sessionId})
         .write();
 
-    req.session.destroy();
-    res.clearCookie('sessionName');
-    setHeader(res, {
-        cors: {
-            url: 'http://membership-test.s3-website.ap-northeast-2.amazonaws.com'
-        }
-    }).send(true);
+    req.session.destroy(err => {
+        err ? res.send(true) : res.send(err);
+    });
 });
 
 router.post('/signUp', function (req, res) {
@@ -84,11 +59,7 @@ router.post('/signUp', function (req, res) {
             .write();
     }
 
-    setHeader(res, {
-        cors: {
-            url: 'http://membership-test.s3-website.ap-northeast-2.amazonaws.com'
-        }
-    }).json({
+    res.json({
         result: !isDuplicated,
     });
 });
@@ -125,38 +96,21 @@ router.post('/login', function (req, res) {
 
         // express-session을 이용해 세션 설정
         req.session.sessionId = sessionId;
-        res.cookie('sessionName', userResult.name);
-        setHeader(res, {
-            cors: {
-                url: 'http://membership-test.s3-website.ap-northeast-2.amazonaws.com'
-            }
-        }).send(true);
+        res.send(userResult.name);
     } else {
-        setHeader(res, {
-            cors: {
-                url: 'http://membership-test.s3-website.ap-northeast-2.amazonaws.com'
-            },
-        }).send(false);
+        res.send(undefined);
     }
 });
 
 router.patch('/:id', function (req, res) {
-    setHeader(res, {
-        cors: {
-            url: 'http://membership-test.s3-website.ap-northeast-2.amazonaws.com'
-        }
-    }).json({
+    res.json({
         result: true,
         message: `${req.params.id} : updated`
     });
 });
 
 router.delete('/:id', function (req, res) {
-    setHeader(res, {
-        cors: {
-            url: 'http://membership-test.s3-website.ap-northeast-2.amazonaws.com'
-        }
-    }).json({
+    res.json({
         result: true,
         message: `${req.params.id} : deleted`
     });
