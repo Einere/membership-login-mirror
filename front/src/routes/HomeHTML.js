@@ -1,5 +1,3 @@
-import {parseCookie} from "../lib/parseCookie.js";
-
 function HomeHTML() {
 
 }
@@ -15,8 +13,7 @@ HomeHTML.prototype.getHtml = function () {
 };
 
 HomeHTML.prototype.setWelcomeMessage = function () {
-    const cookieObj = parseCookie(document.cookie);
-    document.getElementById('user-name').innerText += ` ${cookieObj['sessionName']}!`;
+    document.getElementById('user-name').textContent = document.getElementById('logged-in-user-name').textContent;
 };
 
 HomeHTML.prototype.requestLogOut = function () {
@@ -36,15 +33,15 @@ HomeHTML.prototype.requestLogOut = function () {
 };
 
 HomeHTML.prototype.setEventListenerToLogOut = function () {
-    document.getElementById('logout').addEventListener('click', function (e) {
+    document.getElementById('logout').addEventListener('click', function () {
         this.requestLogOut()
-            .then(value => {
+            .then(() => {
                 location.hash = 'login';
             })
-            .catch(value => {
-                document.cookie = '';
+            .catch(() => {
                 location.hash = 'login';
-            })
+            });
+        document.getElementById('logged-in-user-name').textContent = '';
     }.bind(this));
 };
 

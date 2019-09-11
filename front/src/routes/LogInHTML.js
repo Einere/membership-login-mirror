@@ -78,7 +78,7 @@ LogInHTML.prototype.requestLogIn = function () {
 
         xhr.onreadystatechange = function () {
             if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                xhr.response === "true" ? res() : rej();
+                xhr.response ? res(xhr.response) : rej(xhr.response);
             }
         };
 
@@ -91,7 +91,8 @@ LogInHTML.prototype.setEventListenerToLogIn = function () {
     document.getElementById('login').addEventListener('click', function () {
         if (this.validation.id && this.validation.pw) {
             this.requestLogIn()
-                .then(() => {
+                .then((userName) => {
+                    document.getElementById('logged-in-user-name').textContent = userName;
                     location.hash = '';
                 })
                 .catch(() => {
