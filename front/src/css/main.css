@@ -55,6 +55,27 @@ input, select, textarea {
     -webkit-box-sizing: border-box;
 }
 
+/* navigation bar*/
+nav.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: var(--large-font-size);
+    padding: 0 1rem;
+    color: white;
+    background-color: forestgreen;
+    margin-bottom: 1rem;
+}
+
+nav.header .nav-bar-menu-container {
+    display: flex;
+    flex-direction: row;
+}
+
+nav.header .nav-bar-menu-container span {
+    width: max-content;
+}
+
 /* main container */
 main.container {
     flex: 1 0 auto;
