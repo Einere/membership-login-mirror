@@ -1,7 +1,13 @@
+import {ModuleHTML} from "../lib/ModuleHTML.js";
+
 function HomeHTML() {
-    this.url = 'http://membership-server.vmurx8km59.us-east-2.elasticbeanstalk.com/users';
-    // this.url = 'http://localhost:3000/users';
+    // inherit ModuleHTML
+    ModuleHTML.call(this);
 }
+
+// inherit ModuleHTML
+HomeHTML.prototype = Object.create(ModuleHTML.prototype);
+HomeHTML.prototype.constructor = HomeHTML;
 
 HomeHTML.prototype.getHtml = function () {
     return `
@@ -17,7 +23,7 @@ HomeHTML.prototype.setWelcomeMessage = function () {
     document.getElementById('user-name').textContent = document.getElementById('logged-in-user-name').textContent;
 };
 
-HomeHTML.prototype.requestLogOut = function () {
+/*HomeHTML.prototype.requestLogOut = function () {
     return new Promise((res, rej) => {
         const xhr = new XMLHttpRequest();
         xhr.open('GET', this.url + '/logout', true);
@@ -31,18 +37,39 @@ HomeHTML.prototype.requestLogOut = function () {
 
         xhr.send();
     });
-};
+};*/
 
 HomeHTML.prototype.setEventListenerToLogOut = function () {
     document.getElementById('logout').addEventListener('click', function () {
-        this.requestLogOut()
+        /*this.request('GET', `${this.url}/logout`, function (xhr, res, rej) {
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                xhr.response === "true" ? res() : rej();
+            }
+        })
             .then(() => {
+                document.getElementById('logged-in-user-name').textContent = '';
                 location.hash = 'login';
             })
             .catch(() => {
+                document.getElementById('logged-in-user-name').textContent = '';
                 location.hash = 'login';
-            });
-        document.getElementById('logged-in-user-name').textContent = '';
+            });*/
+
+        this.request('GET', `${this.url}/logout`, function (xhr, res, rej) {
+            return function () {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    xhr.response === "true" ? res() : rej();
+                }
+            };
+        })
+            .then(() => {
+                document.getElementById('logged-in-user-name').textContent = '';
+                location.hash = 'login';
+            })
+            .catch(() => {
+                document.getElementById('logged-in-user-name').textContent = '';
+                location.hash = 'login';
+            })
     }.bind(this));
 };
 

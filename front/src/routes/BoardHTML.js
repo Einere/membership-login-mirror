@@ -1,8 +1,14 @@
-import {isLoggedIn} from "../lib/isLoggedIn.js";
+import {IsLoggedIn} from "../lib/IsLoggedIn.js";
+import {ModuleHTML} from "../lib/ModuleHTML.js";
 
 function BoardHTML() {
-
+    // inherit ModuleHTML
+    ModuleHTML.call(this);
 }
+
+// inherit ModuleHTML
+BoardHTML.prototype = Object.create(ModuleHTML.prototype);
+BoardHTML.prototype.constructor = BoardHTML;
 
 BoardHTML.prototype.getHTML = function () {
     return `
@@ -12,40 +18,26 @@ BoardHTML.prototype.getHTML = function () {
     `;
 };
 
-BoardHTML.prototype.requestLogOut = function () {
-    return new Promise((res, rej) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:3000/users/logout', true);
-        xhr.withCredentials = true;
-
-        xhr.onreadystatechange = function () {
-            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                xhr.response === "true" ? res() : rej();
-            }
-        };
-
-        xhr.send();
-    });
-};
-
 BoardHTML.prototype.setEventListenerToLogOut = function () {
-    document.getElementById('logout').addEventListener('click', function (e) {
-        this.requestLogOut()
-            .then(value => {
-                document.cookie = '';
+    document.getElementById('logout').addEventListener('click', function () {
+        this.request('GET', `${this.url}/logout`, function (xhr, res, rej) {
+            return function () {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    xhr.response === "true" ? res() : rej();
+                }
+            };
+        })
+            .then(() => {
+                document.getElementById('logged-in-user-name').textContent = '';
                 location.hash = 'login';
-            })
-            .catch(value => {
-                document.cookie = '';
-                location.hash = 'login';
-            })
+            });
     }.bind(this));
 };
 
 BoardHTML.prototype.postRender = function () {
     this.setEventListenerToLogOut();
 
-    isLoggedIn()
+    new IsLoggedIn().request()
         .then(() => {
             document.getElementById('user-name').innerText = 'logged in!';
         })

@@ -1,8 +1,12 @@
 import {InputTags} from "../lib/InputTags.js";
 import {makeInputNode} from "../lib/makeInputNode.js";
 import {readTextFile} from "../lib/readTextFile.js";
+import {ModuleHTML} from "../lib/ModuleHTML.js";
 
 function SignUpHTML() {
+    // inherit ModuleHTML
+    ModuleHTML.call(this);
+
     this.days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     this.regExp = {
         id: /^(?=.*[a-z])(?=.*[0-9])[a-z0-9\-_]{5,20}$/,
@@ -25,13 +29,15 @@ function SignUpHTML() {
         agree: false
     };
     this.inputTags = undefined;
-    this.url = 'http://membership-server.vmurx8km59.us-east-2.elasticbeanstalk.com/users';
-    // this.url = 'http://localhost:3000/users';
 
     readTextFile('./src/data/signUpError.json', function (text) {
         this.error = JSON.parse(text);
     }.bind(this));
 }
+
+// inherit ModuleHTML
+SignUpHTML.prototype = Object.create(ModuleHTML.prototype);
+SignUpHTML.prototype.constructor = SignUpHTML;
 
 // 회원가입 html을 반환하는 함수
 SignUpHTML.prototype.getHtml = function () {
@@ -146,15 +152,6 @@ SignUpHTML.prototype.getHtml = function () {
     `;
 };
 
-// 각 input에 대해 결과를 표시하는 함수
-SignUpHTML.prototype.setResult = function (target, key, index) {
-    const error = this.error[key][index];
-
-    target.textContent = error.message;
-    target.style.color = error.success ? "green" : "red";
-    this.validation[key] = error.success;
-};
-
 SignUpHTML.prototype.setEventListenerToForm = function () {
     const inputs = document.getElementsByTagName('input');
 
@@ -173,9 +170,15 @@ SignUpHTML.prototype.setEventListenerToId = function () {
     document.getElementById('form-id').addEventListener('blur', function (e) {
         const formIdResult = document.querySelector('#form-id-result');
 
-        // 아이디가 유효한지 검사한다
+        // 아이디가 중복되는지 검사한다
         if (this.regExp.id.test(e.target.value)) {
-            requestCheckingDuplicatedId('GET', this.url + `/checkId/${e.target.value}`)
+            this.request('GET', `${this.url}/isDuplicatedId/${e.target.value}`, function (xhr, res, rej) {
+                return function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                        xhr.response === "true" ? rej() : res();
+                    }
+                };
+            })
                 .then(() => {
                     this.setResult(formIdResult, 'id', 0);
                 })
@@ -187,23 +190,6 @@ SignUpHTML.prototype.setEventListenerToId = function () {
         }
     }.bind(this));
 };
-
-function requestCheckingDuplicatedId(method, url) {
-    return new Promise((res, rej) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open(method, url, true);
-
-        xhr.onreadystatechange = function () {
-            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                const {result} = JSON.parse(xhr.response);
-                result ? res() : rej();
-            }
-        };
-
-        xhr.send();
-    });
-}
-
 
 SignUpHTML.prototype.setEventListenerToPw = function () {
     document.getElementById('form-pw').addEventListener('blur', function (e) {
@@ -248,7 +234,6 @@ SignUpHTML.prototype.setEventListenerToName = function () {
         }
     }.bind(this));
 };
-
 
 // 윤년인지 검사하는 함수
 function isLeapYear(year) {
@@ -404,7 +389,7 @@ SignUpHTML.prototype.setEventListenerToAgree = function () {
         }
     });
 
-    // 약관 동의 체크
+    // 약관 동의 체크한 경우
     modalAccept.addEventListener('click', function () {
         const formAgree = document.querySelector('#form-agree');
         formAgree.checked = true;
@@ -443,24 +428,20 @@ SignUpHTML.prototype.setEventListenerToSubmit = function () {
             return acc && this.validation[key];
         }.bind(this), true);
 
-        if (!result) {
-            this.showSnackBar(message);
+        // 모든 유효성을 만족한 경우
+        if (result) {
+            this.request('POST', `${this.url}/signUp`, function (xhr, res, rej) {
+                return function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) res();
+                };
+            }, this.makeSignUpFormData())
+                .then(() => {
+                    location.hash = 'login';
+                });
         } else {
-            this.requestFormData('POST', this.url + "/signUp");
+            this.showSnackBar(message);
         }
     }.bind(this));
-};
-
-SignUpHTML.prototype.requestFormData = function (method, url) {
-    const xhr = new XMLHttpRequest();
-    xhr.open(method, url, true);
-
-    xhr.onreadystatechange = function () {
-        // go to login page
-        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) location.hash = 'login';
-    };
-
-    xhr.send(this.makeSignUpFormData());
 };
 
 // 스낵바를 보여주는 함수

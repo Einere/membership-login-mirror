@@ -1,16 +1,22 @@
 import {readTextFile} from "../lib/readTextFile.js";
+import {ModuleHTML} from "../lib/ModuleHTML.js";
 
 function LogInHTML() {
+    // inherit ModuleHTML
+    ModuleHTML.call(this);
+
     this.validation = {
         id: false,
         pw: false
     };
-    // this.url = 'http://membership-server.vmurx8km59.us-east-2.elasticbeanstalk.com/users';
-    this.url = 'http://localhost:3000/users';
     readTextFile('./src/data/logInError.json', function (text) {
         this.error = JSON.parse(text);
     }.bind(this));
 }
+
+// inherit ModuleHTML
+LogInHTML.prototype = Object.create(ModuleHTML.prototype);
+LogInHTML.prototype.constructor = LogInHTML;
 
 LogInHTML.prototype.getHtml = function () {
     return `
@@ -25,13 +31,6 @@ LogInHTML.prototype.getHtml = function () {
         </div>
     </section>
     `;
-};
-
-LogInHTML.prototype.setResult = function (target, key, index) {
-    const error = this.error[key][index];
-
-    target.textContent = error.message;
-    target.style.color = error.success ? "green" : "red";
 };
 
 LogInHTML.prototype.setEventListenerToId = function () {
@@ -72,27 +71,16 @@ LogInHTML.prototype.makeLogInFormData = function () {
     return formData;
 };
 
-LogInHTML.prototype.requestLogIn = function () {
-    return new Promise((res, rej) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', this.url + "/login", true);
-        xhr.withCredentials = true;
-
-        xhr.onreadystatechange = function () {
-            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                xhr.response ? res(xhr.response) : rej(xhr.response);
-            }
-        };
-
-        xhr.send(this.makeLogInFormData());
-    });
-};
-
-
 LogInHTML.prototype.setEventListenerToLogIn = function () {
     document.getElementById('login').addEventListener('click', function () {
         if (this.validation.id && this.validation.pw) {
-            this.requestLogIn()
+            this.request('POST', `${this.url}/login`, function (xhr, res, rej) {
+                return function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                        xhr.response ? res(xhr.response) : rej(xhr.response);
+                    }
+                };
+            }, this.makeLogInFormData())
                 .then((userName) => {
                     document.getElementById('logged-in-user-name').textContent = userName;
                     location.hash = '';

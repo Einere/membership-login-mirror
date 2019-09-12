@@ -1,7 +1,18 @@
-function isLoggedIn() {
+import {ModuleHTML} from "../lib/ModuleHTML.js";
+
+function IsLoggedIn() {
+    // inherit ModuleHTML
+    ModuleHTML.call(this);
+}
+
+// inherit ModuleHTML
+IsLoggedIn.prototype = Object.create(ModuleHTML.prototype);
+IsLoggedIn.prototype.constructor = IsLoggedIn;
+
+IsLoggedIn.prototype.request = function () {
     return new Promise((res, rej) => {
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:3000/users/isLoggedIn', true);
+        xhr.open('GET', `${this.url}/isLoggedIn`, true);
         xhr.withCredentials = true;
 
         xhr.onreadystatechange = function () {
@@ -13,7 +24,7 @@ function isLoggedIn() {
 
         xhr.send();
     });
+};
 
-}
 
-export {isLoggedIn};
+export {IsLoggedIn};
