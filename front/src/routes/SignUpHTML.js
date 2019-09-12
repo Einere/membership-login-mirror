@@ -25,6 +25,8 @@ function SignUpHTML() {
         agree: false
     };
     this.inputTags = undefined;
+    this.url = 'http://membership-server.vmurx8km59.us-east-2.elasticbeanstalk.com/users';
+    // this.url = 'http://localhost:3000/users';
 
     readTextFile('./src/data/signUpError.json', function (text) {
         this.error = JSON.parse(text);
@@ -173,7 +175,7 @@ SignUpHTML.prototype.setEventListenerToId = function () {
 
         // 아이디가 유효한지 검사한다
         if (this.regExp.id.test(e.target.value)) {
-            requestCheckingDuplicatedId('GET', `http://127.0.0.1:3000/users/checkId/${e.target.value}`)
+            requestCheckingDuplicatedId('GET', this.url + `/checkId/${e.target.value}`)
                 .then(() => {
                     this.setResult(formIdResult, 'id', 0);
                 })
@@ -444,7 +446,7 @@ SignUpHTML.prototype.setEventListenerToSubmit = function () {
         if (!result) {
             this.showSnackBar(message);
         } else {
-            this.requestFormData('POST', 'http://localhost:3000/users/signUp');
+            this.requestFormData('POST', this.url + "/signUp");
         }
     }.bind(this));
 };

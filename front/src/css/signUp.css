@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: center;
     width: 50%;
-    margin: 0 auto;
+    margin: 0 auto var(--large-font-size) auto;
 }
 
 @media (min-width: 425px) {
@@ -40,15 +40,6 @@
     height: var(--middle-font-size);
 }
 
-.form-container input:focus,
-.form-container select:focus {
-    border-style: solid;
-    /* for input */
-    border-color: forestgreen;
-    /* for select */
-    outline-color: forestgreen;
-}
-
 .form-container .form-birth-container {
     display: flex;
     flex-direction: row;
@@ -76,7 +67,7 @@
 }
 
 .form-container u.form-agree:hover {
-    color: forestgreen;
+    color: rgba(27, 111, 27, 100%);
     cursor: pointer;
 }
 
@@ -97,6 +88,6 @@
 }
 
 .form-container .form-button-bar .form-button:hover {
-    background-color: darkgreen;
+    background-color: rgba(27, 111, 27, 100%);
     cursor: pointer;
 }

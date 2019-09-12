@@ -37,6 +37,10 @@
     z-index: 1011;
 }
 
+.popup-modal .popup-modal-title {
+    margin: 1rem auto;
+}
+
 .popup-modal.is--visible {
     opacity: 1;
     pointer-events: auto;
@@ -60,6 +64,7 @@
 
 .popup-modal__close i {
     vertical-align: sub;
+    font-size: var(--middle-font-size);
 }
 
 .popup-modal .popup-modal-agree {
@@ -71,16 +76,11 @@
 .popup-modal-button {
     height: var(--large-font-size);
     width: 48%;
-    color: white;
-    background-color: forestgreen;
-    border-style: none;
-    font-weight: bold;
-    font-size: var(--micro-font-size);
     cursor: pointer;
 
 }
 
 .popup-modal-button:disabled {
-    background-color: darkred;
+    background-color: lightgray;
     cursor: not-allowed;
 }

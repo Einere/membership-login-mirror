@@ -7,6 +7,7 @@
     --middle-font-size: 2rem;
     --small-font-size: 1.5rem;
     --micro-font-size: 1.2rem;
+    --footer-font-size: 0.9rem;
 }
 
 /* 최상위 엘리먼트들 */
@@ -54,6 +55,23 @@ input, select, textarea {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    border: 1px solid rgba(69, 69, 69, 50%);
+    border-radius: 5px;
+    outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+    border: 2px solid rgba(34, 139, 34, 100%);
+}
+
+button {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: var(--micro-font-size);
+    border-radius: 5px;
+    color: white;
+    background-color: forestgreen;
+    border-style: none;
+    font-weight: bold;
 }
 
 /* navigation bar*/
@@ -67,6 +85,7 @@ nav.header {
     color: white;
     background-color: forestgreen;
     margin-bottom: 1rem;
+    font-size: var(--micro-font-size);
 }
 
 nav.header .nav-bar-home-container {
@@ -85,7 +104,7 @@ nav.header a {
 }
 
 nav.header a:hover {
-    color: dimgray;
+    color: rgba(141, 196, 141, 100%);
 }
 
 /* main container */
@@ -102,12 +121,10 @@ main.container {
 
 /* footer */
 footer {
-    /*position: fixed;
-    left: 0;
-    bottom: 0;*/
     width: 100%;
-    background-color: dimgray;
     color: white;
+    font-size: var(--footer-font-size);
+    background-color: dimgray;
     text-align: center;
 }
 

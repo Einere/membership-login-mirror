@@ -31,13 +31,6 @@ section.login input {
     margin-bottom: 1rem;
 }
 
-section.login input:focus {
-    border-style: solid;
-    /* for input */
-    border-color: forestgreen;
-
-}
-
 section.login .login-button-bar {
     display: flex;
     flex-direction: row;
@@ -49,15 +42,10 @@ section.login .login-button-bar {
 section.login .login-button-bar button {
     height: var(--large-font-size);
     width: 48%;
-    color: white;
-    background-color: forestgreen;
-    border-style: none;
-    font-weight: bold;
-    font-size: var(--micro-font-size);
 }
 
 section.login .login-button-bar button:hover {
-    background-color: darkgreen;
+    background-color: rgba(27, 111, 27, 100%);
     cursor: pointer;
 }
 

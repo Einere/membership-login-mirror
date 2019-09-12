@@ -5,6 +5,8 @@ function LogInHTML() {
         id: false,
         pw: false
     };
+    // this.url = 'http://membership-server.vmurx8km59.us-east-2.elasticbeanstalk.com/users';
+    this.url = 'http://localhost:3000/users';
     readTextFile('./src/data/logInError.json', function (text) {
         this.error = JSON.parse(text);
     }.bind(this));
@@ -73,7 +75,7 @@ LogInHTML.prototype.makeLogInFormData = function () {
 LogInHTML.prototype.requestLogIn = function () {
     return new Promise((res, rej) => {
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://localhost:3000/users/login', true);
+        xhr.open('POST', this.url + "/login", true);
         xhr.withCredentials = true;
 
         xhr.onreadystatechange = function () {

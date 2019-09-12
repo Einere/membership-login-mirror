@@ -2,6 +2,7 @@ section.home {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 50%;
 }
 
 section.home span#user-name {

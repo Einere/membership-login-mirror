@@ -1,5 +1,6 @@
 function HomeHTML() {
-
+    this.url = 'http://membership-server.vmurx8km59.us-east-2.elasticbeanstalk.com/users';
+    // this.url = 'http://localhost:3000/users';
 }
 
 HomeHTML.prototype.getHtml = function () {
@@ -19,7 +20,7 @@ HomeHTML.prototype.setWelcomeMessage = function () {
 HomeHTML.prototype.requestLogOut = function () {
     return new Promise((res, rej) => {
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:3000/users/logout', true);
+        xhr.open('GET', this.url + '/logout', true);
         xhr.withCredentials = true;
 
         xhr.onreadystatechange = function () {
