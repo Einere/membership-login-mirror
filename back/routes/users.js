@@ -27,24 +27,21 @@ db.defaults({sessions: {}}).write();
 router.get('/', function (req, res, next) {
 });
 
-router.get('/checkId/:id', function (req, res) {
-    res.json({
-        result: !isDuplicatedId(req.params.id)
-    });
+router.get('/isDuplicatedId/:id', function (req, res) {
+    res.status(200).send(!!isDuplicatedId(req.params.id));
 });
 
 router.get('/isLoggedIn', function (req, res) {
-    res.send(!!isLoggedIn(req.session.sessionId));
+    res.status(200).send(!!isLoggedIn(req.cookies.sessionId));
 });
 
 router.get('/logout', function (req, res) {
     db.get('sessions')
-        .remove({sessionId: req.session.sessionId})
+        .remove({sessionId: req.cookies.sessionId})
         .write();
 
-    req.session.destroy(err => {
-        err ? res.send(true) : res.send(err);
-    });
+    res.clearCookie('sessionId');
+    res.status(200).send(true);
 });
 
 router.post('/signUp', function (req, res) {
@@ -94,8 +91,7 @@ router.post('/login', function (req, res) {
             sessionId = sessionResult.sessionId;
         }
 
-        // express-session을 이용해 세션 설정
-        req.session.sessionId = sessionId;
+        res.cookie('sessionId', `${sessionId}`, {httpOnly: true});
         res.send(userResult.name);
     } else {
         res.send(undefined);

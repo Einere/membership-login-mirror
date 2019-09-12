@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const upload = require('multer')();
 const session = require('express-session');
-const uuid = require('uuid/v4');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -20,12 +19,17 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(upload.array());
+// prevent 304
+app.disable('etag');
 app.use(cookieParser());
-app.use(session({
+/*app.use(session({
     secret: 'keyboard cat',
     resave: false,
-    saveUninitialized: true
-}));
+    saveUninitialized: true,
+    cookie: {
+        secure: false
+    }
+}));*/
 app.use(express.static(path.join(__dirname, 'public')));
 
 process.env.ORIGIN = 'http://localhost:63342';
