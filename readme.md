@@ -58,4 +58,4 @@ description : 회원가입 및 로그인 개발(front-end)
 
 
 ## URL
-http://membership-test.s3-website.ap-northeast-2.amazonaws.com
+https://boostcamp-membership.herokuapp.com
