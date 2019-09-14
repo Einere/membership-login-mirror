@@ -1,0 +1,38 @@
+{
+  "users": [
+    {
+      "id": "kjwsx23",
+      "pw": "Rmaejd@762",
+      "name": "chj",
+      "year": "1994",
+      "month": "0",
+      "day": "1",
+      "gender": "0",
+      "email": "hana9424@google.com",
+      "phone": "01027629424",
+      "interesting": "html,css,js"
+    },
+    {
+      "id": "kjwsx234",
+      "pw": "Rmaejd@762",
+      "name": "최형준",
+      "year": "1994",
+      "month": "0",
+      "day": "1",
+      "gender": "0",
+      "email": "kjwsx23@naver.com",
+      "phone": "01027629424",
+      "interesting": "html,css,js"
+    }
+  ],
+  "sessions": [
+    {
+      "id": "kjwsx234",
+      "sessionId": "1972e052-2ac6-4dd7-844c-5465e6c27972"
+    },
+    {
+      "id": "kjwsx23",
+      "sessionId": "292af7eb-6e0f-44a9-afc1-28ed78065733"
+    }
+  ]
+}

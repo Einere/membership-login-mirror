@@ -17,12 +17,20 @@ function setContent(htmlStr) {
     return container;
 }
 
-function router(hashValue) {
+async function router(hashValue) {
     switch (hashValue) {
         case '': {
             const homeHTML = new HomeHTML();
-            setContent(homeHTML.getHtml());
-            homeHTML.postRender();
+            try{
+                const flag = await homeHTML.preRender();
+                console.log(`flag`, flag);
+                setContent(homeHTML.getHtml());
+                homeHTML.postRender(flag);
+            }
+            catch(err) {
+                console.log(`err`, err);
+                homeHTML.postRender(err);
+            }
             break;
         }
         case 'signUp': {

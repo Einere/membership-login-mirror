@@ -27,7 +27,7 @@ module.exports = {
                 collapseWhitespace: true
             },
             hash: true,
-            template: './index.html'
+            template: './home.html'
         })
     ],
     node: {

@@ -1,6 +1,7 @@
 function ModuleHTML() {
+    // this.url = 'http://localhost:3000/users';
     // this.url = 'http://membership-server.vmurx8km59.us-east-2.elasticbeanstalk.com/users';
-    this.url = 'http://localhost:3000/users';
+    this.url = 'https://boostcamp-membership-server.herokuapp.com/users';
     this.validation = {};
     this.error = {};
 }
@@ -25,6 +26,9 @@ ModuleHTML.prototype.request = function (method, url, callback, data) {
         xhr.open(method, url, true);
         xhr.send(data);
     });
+};
+
+ModuleHTML.prototype.preRender = function () {
 };
 
 ModuleHTML.prototype.postRender = function () {

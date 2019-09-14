@@ -4,7 +4,6 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const upload = require('multer')();
-const session = require('express-session');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -22,18 +21,11 @@ app.use(upload.array());
 // prevent 304
 app.disable('etag');
 app.use(cookieParser());
-/*app.use(session({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        secure: false
-    }
-}));*/
 app.use(express.static(path.join(__dirname, 'public')));
 
-process.env.ORIGIN = 'http://localhost:63342';
+// process.env.ORIGIN = 'http://localhost:63342';
 // process.env.ORIGIN = 'http://membership-test.s3-website.ap-northeast-2.amazonaws.com';
+process.env.ORIGIN = 'https://boostcamp-membership.herokuapp.com';
 
 // CORS handling
 app.use('/*', function (req, res, next) {

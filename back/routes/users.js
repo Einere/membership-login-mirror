@@ -25,6 +25,7 @@ db.defaults({sessions: {}}).write();
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
+    res.send('users');
 });
 
 router.get('/isDuplicatedId/:id', function (req, res) {
