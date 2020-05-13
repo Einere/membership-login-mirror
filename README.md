@@ -7,6 +7,26 @@
 
 > boostcamp membership mission 1
 
+### 🏠 [Homepage](https://boostcamp-membership.herokuapp.com)
+
+## About
+회원가입 및 로그인 기능을 익히기 위한 간단한 프로젝트입니다.
+외부 라이브러리의 사용을 최소화하였으며, 서버는 간단한 데이터 응답용으로 구성하였습니다.
+
+## Skill
+- HTML
+- CSS
+- vanilla JS
+- Node.js
+- Express
+- lowDB
+- heroku
+
+## Feature
+- 회원가입
+- 로그인
+- 로그아웃
+
 ## Structure
 ### frontend
 ```
@@ -39,7 +59,7 @@
 └── db.json                   # 데이터베이스
 ```
 
-### 🏠 [Homepage](https://boostcamp-membership.herokuapp.com)
+
 
 ## Install
 ```sh
